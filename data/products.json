@@ -1,0 +1,29 @@
+[
+	{
+		"id": 1,
+		"title": "cafe",
+		"description": "infusion",
+		"price": 500,
+		"thumbnail": "url",
+		"code": "f34f34",
+		"stock": 5
+	},
+	{
+		"id": 2,
+		"title": "azucar",
+		"description": "comida",
+		"price": 500,
+		"thumbnail": "url",
+		"code": "htrh34",
+		"stock": 5
+	},
+	{
+		"id": 3,
+		"title": "yerba",
+		"description": "infusion",
+		"price": 300,
+		"thumbnail": "url",
+		"code": "gh5k98",
+		"stock": 5
+	}
+]
