@@ -1,6 +1,8 @@
 const fs = require('fs/promises');
 const { existsSync } = require('fs');
 
+
+
 class ProductManager {
 
     static idCounter = 0;
@@ -9,6 +11,7 @@ class ProductManager {
         this.path = path
     }
 
+    
 
     async addProducts(product) {
         try {
@@ -111,6 +114,7 @@ class ProductManager {
             console.log(error.message)
         }
     }
+
 }
 
 module.exports = ProductManager;
