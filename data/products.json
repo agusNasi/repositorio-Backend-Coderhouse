@@ -3,54 +3,70 @@
 		"id": 1,
 		"title": "cafe",
 		"description": "infusion",
-		"price": 500,
-		"thumbnail": "url",
 		"code": "f34f34",
-		"stock": 5
+		"price": 500,
+		"status": true,
+		"stock": 5,
+		"thumbnail": []
 	},
 	{
 		"id": 2,
 		"title": "te",
 		"description": "infusion",
-		"price": 500,
-		"thumbnail": "url",
 		"code": "htrh34",
-		"stock": 10
+		"price": 500,
+		"status": true,
+		"stock": 10,
+		"thumbnail": []
 	},
 	{
 		"id": 3,
 		"title": "mate cocido",
 		"description": "infusion",
-		"price": 500,
-		"thumbnail": "url",
 		"code": "gjd437",
-		"stock": 15
+		"price": 500,
+		"status": true,
+		"stock": 15,
+		"thumbnail": []
 	},
 	{
 		"id": 4,
 		"title": "arroz",
 		"description": "comida",
-		"price": 500,
-		"thumbnail": "url",
 		"code": "fdc52j",
-		"stock": 25
+		"price": 500,
+		"status": true,
+		"stock": 25,
+		"thumbnail": []
 	},
 	{
 		"id": 5,
 		"title": "fideos",
-		"description": "infusion",
-		"price": 500,
-		"thumbnail": "url",
+		"description": "comida",
 		"code": "kvjf56",
-		"stock": 32
+		"price": 500,
+		"status": true,
+		"stock": 32,
+		"thumbnail": []
 	},
 	{
 		"id": 6,
 		"title": "hamburguesa",
-		"description": "comida",
-		"price": 500,
-		"thumbnail": "url",
+		"description": "alimento",
 		"code": "rwpq09",
-		"stock": 29
+		"price": 500,
+		"status": true,
+		"stock": 29,
+		"thumbnail": []
+	},
+	{
+		"id": 7,
+		"title": "papas",
+		"description": "alimento",
+		"code": "247hhr",
+		"price": 500,
+		"status": true,
+		"stock": 29,
+		"thumbnail": []
 	}
 ]
