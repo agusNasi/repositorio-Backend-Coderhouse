@@ -14,29 +14,31 @@ class ProductManager {
     
 
     async addProducts(product) {
-        try {
-            const savedProducts = await this.getProducts();
+        try{
+            const savedProducts = await this.getProducts()
             const DuplicatedProduct = savedProducts.find(item => item.code == product.code)
             if (DuplicatedProduct){
-                throw new Error(`ERROR: No se pudo añadir. El siguiente código ya se encuentra registrado: ${product.code}`)
+                return { error: `ERROR: Unable to add. The next code has been already added: ${product.code}` }
             }
-            if (!savedProducts.length) {
-                ProductManager.idCounter = 1;
-            } else {
-                ProductManager.idCounter = savedProducts[savedProducts.length - 1].id + 1;
+            if (!product.title || !product.description || !product.code || !product.price || !product.stock || !product.category){
+                return { error: `ERROR: Unable to add. Missing fields` }
             }
-            
+            const newId = savedProducts.length > 0 ? savedProducts[savedProducts.length -1 ].id + 1 : 1
             const newProduct = {
-                id: ProductManager.idCounter,
+                id: newId,
+                status: product.status === 'on',
+                thumbnails: product.thumbnails || [],
+                havePics: product.thumbnails.length > 0,
                 ...product
             }
-            savedProducts.push(newProduct);
-            await fs.writeFile(this.path, JSON.stringify(savedProducts, null, '\t'));
-            return newProduct;
-
-
-        } catch (error) {
-            console.error(error.message);
+            savedProducts.push(newProduct)
+            const productListString = JSON.stringify(savedProducts, null, '\t')
+            await fs.writeFile(this.path, productListString)
+            console.log(`${product.title} added`)
+            return newProduct
+        }
+        catch(error){
+            console.log(error.message)
         }
     }
 

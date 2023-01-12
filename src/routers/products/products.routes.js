@@ -1,5 +1,6 @@
 const { Router } = require('express');
-const ProductManager = require('../../script');
+const uploader = require('../../utils')
+const ProductManager = require('../../managers/script');
 const products = new ProductManager('./data/products.json');
 
 const router = Router();
@@ -52,19 +53,29 @@ router.get('/:pid', (req, res) => {
 
 })
 
-router.post('/', (req, res) => {
-    const productManager = async () => {
-        let consulta = req.body;
-        let addProduct = await products.addProducts(consulta);
-
-        res.send({
-            status: 'successfully',
-            payload: addProduct
-        });
+router.post('/', uploader.array('files'), async (req, res) =>{
+    const newProduct = req.body
+    if(req.files){
+        const paths = req.files.map(file => {
+            return {path: file.path,
+             originalName: file.originalname    
+            }
+        })
+        newProduct.thumbnails = paths
     }
-
-
-    productManager();
+    if(!Object.keys(newProduct).length){
+        return res.status(400).send('Error: Missing product')
+    }
+    const addProduct = await products.addProducts(newProduct)
+    if(addProduct.error){
+        return res.status(400).send({
+                error: addProduct.error
+            })
+    }
+    res.send({
+        status: 'success',
+        added: addProduct
+    })
 })
 
 router.put('/:pid', (req, res) => {

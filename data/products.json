@@ -1,72 +1,77 @@
 [
 	{
 		"id": 1,
-		"title": "cafe",
-		"description": "infusion",
-		"code": "f34f34",
-		"price": 500,
-		"status": true,
-		"stock": 5,
-		"thumbnail": []
+		"status": "on",
+		"thumbnails": [
+			{
+				"path": "D:\\Programación\\Coderhouse\\Backend\\Entregables\\04-websockets\\public\\img\\iphone.png",
+				"originalName": "iphone.png"
+			}
+		],
+		"havePics": true,
+		"title": "Iphone 13",
+		"description": "celular gama alta, tres cámaras, color negro mate",
+		"code": "25232",
+		"price": "189.000",
+		"stock": "35",
+		"category": "phones"
 	},
 	{
 		"id": 2,
-		"title": "te",
-		"description": "infusion",
-		"code": "htrh34",
-		"price": 500,
-		"status": true,
-		"stock": 10,
-		"thumbnail": []
+		"status": false,
+		"thumbnails": [
+			{
+				"path": "D:\\Programación\\Coderhouse\\Backend\\Entregables\\04-websockets\\public\\img\\samsung-s22.png",
+				"originalName": "samsung-s22.png"
+			}
+		],
+		"havePics": true,
+		"title": "Samsung s22",
+		"description": "celular gama alta, 5 cámaras, color negro",
+		"code": "342",
+		"price": "199.999",
+		"stock": "0",
+		"category": "phones"
 	},
 	{
 		"id": 3,
-		"title": "mate cocido",
-		"description": "infusion",
-		"code": "gjd437",
-		"price": 500,
-		"status": true,
-		"stock": 15,
-		"thumbnail": []
+		"status": "on",
+		"thumbnails": [
+			{
+				"path": "D:\\Programación\\Coderhouse\\Backend\\Entregables\\04-websockets\\public\\img\\iphone-x.png",
+				"originalName": "iphone-x.png"
+			}
+		],
+		"havePics": true,
+		"title": "Iphone X",
+		"description": "celular gama alta, 2 camaras",
+		"code": "252",
+		"price": "149.000",
+		"stock": "3",
+		"category": "phones"
 	},
 	{
 		"id": 4,
-		"title": "arroz",
-		"description": "comida",
-		"code": "fdc52j",
-		"price": 500,
-		"status": true,
-		"stock": 25,
-		"thumbnail": []
-	},
-	{
-		"id": 5,
-		"title": "fideos",
-		"description": "comida",
-		"code": "kvjf56",
-		"price": 500,
-		"status": true,
-		"stock": 32,
-		"thumbnail": []
+		"status": false,
+		"thumbnails": [],
+		"havePics": false,
+		"title": "Motorola Edge 30",
+		"description": "celular gama media",
+		"code": "54323",
+		"price": "109.000",
+		"stock": "3",
+		"category": "celular"
 	},
 	{
 		"id": 6,
-		"title": "hamburguesa",
-		"description": "alimento",
-		"code": "rwpq09",
-		"price": 500,
-		"status": true,
-		"stock": 29,
-		"thumbnail": []
-	},
-	{
-		"id": 7,
-		"title": "papas",
-		"description": "alimento",
-		"code": "247hhr",
-		"price": 500,
-		"status": true,
-		"stock": 29,
-		"thumbnail": []
+		"status": false,
+		"thumbnails": [],
+		"havePics": false,
+		"title": "Huawei P20 Lite",
+		"description": "346",
+		"code": "456",
+		"price": "89.000",
+		"stock": "465",
+		"category": "456"
 	}
 ]
