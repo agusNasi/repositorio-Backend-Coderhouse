@@ -2,21 +2,22 @@
     <h1 id="main-title">Products</h1>
     <div id="product-list-container">
         {{#each products}}
-            <div id="product-item">
-                <p id="title">{{title}}</p>
-                <p>{{description}}</p>
-                <p>${{price}}</p>
-                {{#if havePics}}
-                    <div class="thumbnail-container">
-                        <img src="../../statics/img/{{thumbnails.0.originalName}}" alt="">
-                    </div>
-                {{else}}
-                    <p id="no-image">no image</p>
-                {{/if}}
+        <div id="product-item">
+            <p id="title">{{title}}</p>
+            <p>{{description}}</p>
+            <p>${{price}}</p>
+            {{#if havePics}}
+            <div class="thumbnail-container">
+                <img src="../../statics/img/{{thumbnails.0.originalName}}" alt="">
             </div>
+            {{else}}
+            <p id="no-image">no image</p>
+            {{/if}}
+        </div>
         {{/each}}
     </div>
-    <form action="/realtimeproducts" id="add-realtimeproducts-form" class="add-product-form" method="post" enctype="multipart/form-data">
+    <form action="/realtimeproducts" id="add-realtimeproducts-form" class="add-product-form" method="post"
+        enctype="multipart/form-data">
         <h2>Agregar Producto</h2>
         <input type="text" placeholder="Titulo" name="title" required>
         <input type="text" placeholder="Descripcion" name="description" required>

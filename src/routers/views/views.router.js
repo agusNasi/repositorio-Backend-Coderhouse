@@ -1,17 +1,19 @@
 const { Router } = require('express');
 const uploader = require('../../utils');
-const ProductManager = require('../../managers/script');
+const ProductMongoManager = require('../../daos/mongoManager/product.manager');
+const productService = new ProductMongoManager();
+
 
 const router = Router()
 
-const productManager = new ProductManager('./data/products.json');
+
 
 router.get('/', async (req, res)=>{
-    const products = await productManager.getProducts()
+    const products = await productService.getProducts();
     const limit = req.query.limit
     if(!limit){
         return res.render('home',{
-            products: products,
+            products,
             style: 'home.css',
             title: 'Products'
         })
@@ -25,7 +27,7 @@ router.get('/', async (req, res)=>{
 })
 
 router.get('/realtimeproducts', async (req, res)=>{
-    const products = await productManager.getProducts()
+    const products = await productService.getProducts()
     const limit = req.query.limit
     if(!limit){
         return res.render('realTimeProducts',{

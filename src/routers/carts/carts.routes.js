@@ -1,60 +1,67 @@
 const { Router } = require('express');
-const ProductManager = require('../../managers/script');
-const products = new ProductManager('./data/cart.json');
+const CartMongoManager = require('../../daos/mongoManager/carts.manager');
+const productService = new CartMongoManager();
 
 const router = Router();
 
-router.post('/', (req, res) => {
-    const ProductManager = async () => {
-        const addCart = await products.addCart();
-
+router.get('/',async (req, res) =>{
+    try {
+        const cart = await productService.getCarts();
         res.send({
-            status: 'successfully',
-            payload: addCart
-        });
+            status: 'success',
+            carts: cart
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
     }
-
-    ProductManager();
 })
 
-router.get('/:cid', (req, res) => {
-    const ProductManager = async () => {
-        let consulta = req.params.cid;
-        const selectedCart = await products.getProductById(+consulta);
+router.post('/', async (req, res) => {
 
-        if (selectedCart) {
-            res.send({
-                status: 'successfully',
-                payload: selectedCart
-            })
-        } else {
-            res.status(404).send({ status: 'error', error: 'ese id no existe' });
-        }
+    const addCart = await productService.addCart();
 
-
-    }
-
-    ProductManager();
+    res.send({
+        status: 'successfully',
+        payload: addCart
+    });
 })
 
-router.post('/:cid/products/:pid', (req, res) => {
-    const ProductManager = async () => {
-        const cid = Number(req.params.cid);
-        const pid = Number(req.params.pid);
-        const data = await products.updateCart(cid, pid);
-
-        if (isNaN(cid) || isNaN(pid)) {
-            res.status(400).send("ambos parametros deben ser numeros");
-        } else {
-            res.json({
-                status: "success",
-                data: data
-            });
-        }
+router.get('/:cid', async(req, res) => {
+    const id = req.params.cid
+    try {
+        const cart = await productService.getCartById(id) 
+        res.send({
+            status: 'success',
+            cart: cart
+        })  
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
     }
 
-    ProductManager();
 })
+
+router.post('/:cid/product/:pid', async(req,res)=>{
+    try {
+        const cartId = req.params.cid
+        const productId = req.params.pid
+        const addProduct = await productService.addProduct(cartId, productId)
+        res.send({
+            status: 'success',
+            newCart: addProduct
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+});
 
 
 

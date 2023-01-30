@@ -1,55 +1,62 @@
 const { Router } = require('express');
 const uploader = require('../../utils')
-const ProductManager = require('../../managers/script');
-const products = new ProductManager('./data/products.json');
+const ProductMongoManager = require('../../daos/mongoManager/product.manager');
+const productService = new ProductMongoManager();
 
 const router = Router();
 
-router.get('/', (req, res) => {
-    const productManager = async () => {
+router.get('/', async (req, res) => {
         try {
             //primera consulta
-            let firstProduct = await products.getProducts();
-            let consulta = req.query.limit;
-
-            if (!consulta || isNaN(consulta)) {
-                return res.send(firstProduct)
+            let products = await productService.getProducts();
+            let limit = req.query.limit;
+            if (!limit) {
+                return res.status(200).json({
+                    status:"successfully",
+                    products: products
+                });
             } 
 
-            let productFilter = firstProduct.filter(product => product.id <= consulta);
+            const limitedProducts = products.slice(0,limit)
 
-            res.send({products:productFilter})
-    
+            res.status(200).json({
+                status:"successfully",
+                products: limitedProducts
+            })    
     
         } catch (error) {
-            console.log(error);
+            res.status(400).json({
+                status:"ERROR",
+                message:error.message
+            })
         }
-    }
+    
 
-    productManager();
 })
 
-router.get('/:pid', (req, res) => {
-    const productManager = async () => {
+router.get('/:pid', async(req, res) => {
         try {
-            let consulta = req.params.pid;
-            let searchProduct = await products.getProductById(+consulta);
-            let getProducts = await products.getProducts();
+            const { pid } = req.params;
+            const searchProduct = await productService.getProductById(pid);
+            const getProducts = await productService.getProducts();
 
 
-            if (!consulta || isNaN(consulta) || !searchProduct) {
+            if (!pid || !searchProduct) {
                 return res.send(getProducts)
             }
 
-            res.send(searchProduct);
+            res.status(200).json({
+                status:"successfully",
+                products: searchProduct
+            });
         
     
         } catch (error) {
-            console.log(error);
+            res.status(400).json({
+                status:"ERROR",
+                message:error.message
+            })
         }
-    }
-
-    productManager();
 
 })
 
@@ -66,48 +73,52 @@ router.post('/', uploader.array('files'), async (req, res) =>{
     if(!Object.keys(newProduct).length){
         return res.status(400).send('Error: Missing product')
     }
-    const addProduct = await products.addProducts(newProduct)
+    const addProduct = await productService.addProduct(newProduct)
     if(addProduct.error){
         return res.status(400).send({
                 error: addProduct.error
             })
     }
     res.send({
-        status: 'success',
+        status: 'successfully',
         added: addProduct
     })
 })
 
-router.put('/:pid', (req, res) => {
-    const productManager = async () => {
-        let consulta = req.params.pid;
-        let change = req.body
-        let update = await products.updateProduct(+consulta, change);
+router.put('/:pid', async(req, res) => {
+    try {
+        const { pid } = req.params;
+        const change = req.body
+        const update = await productService.updateProduct(change, pid);
 
-        res.send({
-            status: 'successfully',
-            payload: update
-    
-        });
+        res.status(200).json({
+            status:"successfully",
+            product: update
+        })
+    } catch (error) {
+        res.status(400).json({
+            status:"ERROR",
+            message:error.message
+        })
     }
-
-
-    productManager();
 })
 
-router.delete('/:pid', (req, res) => {
-    const productManager = async () => {
-        let consulta = req.params.pid;
-        let deleteProduct = await products.deleteProduct(+consulta);
+router.delete('/:pid', async (req, res) => {
+        try {
+            let { pid } = req.params;
+            let deleteProduct = await productService.deleteProduct(pid);
+    
+            res.send({
+                status: 'successfully',
+                payload: deleteProduct
+            }) 
+        } catch (error) {
+            res.status(400).json({
+                status:"ERROR",
+                message:error.message
+            })
+        }
 
-        res.send({
-            status: 'successfully',
-            payload: deleteProduct
-        })
-
-    }
-
-    productManager();
 })
 
 
