@@ -1,69 +1,49 @@
 const { Router } = require('express');
-const uploader = require('../../utils');
 const ProductMongoManager = require('../../daos/mongoManager/product.manager');
+const CartMongoManager = require('../../daos/mongoManager/carts.manager');
 const productService = new ProductMongoManager();
+const cartService = new CartMongoManager();
 
 
 const router = Router()
 
 
-
-router.get('/', async (req, res)=>{
-    const products = await productService.getProducts();
-    const limit = req.query.limit
-    if(!limit){
-        return res.render('home',{
-            products,
-            style: 'home.css',
-            title: 'Products'
+router.get('/products', async (req, res) => {
+    try {
+        const products = await productService.getProducts(req.query)
+        res.render("index", {
+            style: "index.css",
+            title: "E-commerce",
+            products: products.docs
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
         })
     }
-    const limitedProducts = products.slice(0,limit)
-    res.render('home',{
-        products: limitedProducts,
-        style: 'home.css',
-        title: 'Products'
-    })
 })
 
-router.get('/realtimeproducts', async (req, res)=>{
-    const products = await productService.getProducts()
-    const limit = req.query.limit
-    if(!limit){
-        return res.render('realTimeProducts',{
-            products: products,
-            style: 'home.css',
-            title: 'Real Time Products'
+router.get('/cart/:cid', async (req, res) => {
+    const cartId = req.params.cid 
+    try {
+        const cart = await cartService.getCartById(cartId)
+        res.render("cart", {
+            style: "cart.css",
+            title: "Cart",
+            products: cart.products,
+            cartId: cart._id
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
         })
     }
-    const limitedProducts = products.slice(0,limit)
-    res.render('realTimeProducts',{
-        products: limitedProducts,
-        style: 'home.css',
-        title: 'Real Time Products'
-    })
-})
+});
 
-router.post('/realtimeproducts', uploader.array('files'), async (req, res)=>{
-    const newProduct = req.body
-    const socket = req.app.get('socket')
-    if(!newProduct){
-        return res.status(400).send({
-            error: 'missing product'
-        })
-    }
-    if(req.files){
-        const paths = req.files.map(file => {
-            return {path: file.path,
-             originalName: file.originalname    
-            }
-        })
-        newProduct.thumbnails = paths
-    }
-    socket.emit('newProduct', newProduct)
-    res.send({
-        status: 'success'
-    })
-})
+
+
+
 
 module.exports = router

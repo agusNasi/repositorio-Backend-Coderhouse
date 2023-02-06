@@ -5,33 +5,26 @@ const productService = new ProductMongoManager();
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-        try {
-            //primera consulta
-            let products = await productService.getProducts();
-            let limit = req.query.limit;
-            if (!limit) {
-                return res.status(200).json({
-                    status:"successfully",
-                    products: products
-                });
-            } 
-
-            const limitedProducts = products.slice(0,limit)
-
-            res.status(200).json({
-                status:"successfully",
-                products: limitedProducts
-            })    
-    
-        } catch (error) {
-            res.status(400).json({
-                status:"ERROR",
-                message:error.message
-            })
-        }
-    
-
+router.get('/', async (req, res)=>{
+    try {
+        const products = await productService.getProducts(req.query)
+        return res.send({
+            status: 'success',
+            payload: products.docs,
+            totalPages: products.totalPages,
+            prevPage: products.prevPage,
+            nextPage: products.nextPage,
+            page: products.page,
+            hasPrevPage: products.hasPrevPage,
+            hasNextPage: products.hasNextPage,
+            prevLink: null,
+            nexLink: null})
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
 })
 
 router.get('/:pid', async(req, res) => {

@@ -1,0 +1,24 @@
+<div>
+    <h1 class="main-title">Our products</h1>
+    <button id="see-cart-button" onclick="seeCart(event)">See Cart</button>
+    <div id="product-list-container">
+        {{#each products}}
+        <div class="product-item" id={{_id}}>
+            <p id="item-title">{{title}}</p>
+            <p>{{description}}</p>
+            <p class="price-tag">${{price}}</p>
+            {{#if thumbnails}}
+            <div class="thumbnail-container">
+                <img src="../../statics/img/{{thumbnails.[0].originalName}}" alt="">
+            </div>
+            {{else}}
+            <p id="no-image">no image</p>
+            {{/if}}
+            <p class="stock-tag">{{stock}} restantes</p>
+            <button id="add-to-cart-button" onclick="addToCart(event)">Add to cart</button>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+<script src="/statics/js/index.js"></script>>

@@ -1,9 +1,10 @@
 body{
-    background-color: #c4c4c4;
+    background-color: #dfdfdf;
 }
 
-h1{
+.main-title{
     text-align: center;
+    font-size: 3rem;
 }
 
 #product-list-container{
@@ -13,8 +14,8 @@ h1{
     justify-content: center;
 }
 
-#product-item{
-    background-color: #ebebeb;
+.product-item{
+    background-color: #ffffff;
     padding: 0.5rem;
     min-width: 10rem;
     max-width: 15rem;
@@ -25,8 +26,17 @@ h1{
     border-radius: 0.5rem;
 }
 
-#title{
+#item-title{
     font-size: 2rem;
+}
+
+.price-tag{
+    font-weight: bolder;
+}
+
+.stock-tag{
+    font-size: 0.9rem;
+    color: #555;
 }
 
 .thumbnail-container{
@@ -46,20 +56,10 @@ h1{
     color: #555;
 }
 
-h2{
-    text-align: center;
-}
-
-.add-product-form{
-    display: flex;
-    flex-direction: column;
-    width: 20rem;
-    background-color: cadetblue;
-    margin: 2rem auto;
+#see-cart-button{
+    display: block;
+    margin: 1rem auto;
     padding: 1rem;
-    border-radius: 0.5rem;
-}
-
-.add-product-form input{
-    margin: 0.3rem 0.5rem;
+    background-color: #87bebe;
+    border: 1px solid black;
 }
