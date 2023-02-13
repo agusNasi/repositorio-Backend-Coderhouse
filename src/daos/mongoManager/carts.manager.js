@@ -38,14 +38,10 @@ class CartMongoManager {
             let cart = await this.getCartById(cartId)
             const Originalproduct = await ProductModel.findById(productId)
             const productToAdd = cart.products.findIndex(product => product.product._id == productId)
-            if(!amount){
-                if(productToAdd < 0){
-                    cart.products.push({product: productId})
-                }else{
-                    cart.products[productToAdd].quantity ++
-                }
+            if(productToAdd < 0){
+                cart.products.push({product: productId, quantity: amount})
             }else{
-                cart.products[productToAdd].quantity = amount
+                cart.products[productToAdd].quantity += amount
             }
             let result = await CartModel.updateOne({_id:cartId}, cart) 
             return result          

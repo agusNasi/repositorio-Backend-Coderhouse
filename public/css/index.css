@@ -2,6 +2,30 @@ body{
     background-color: #dfdfdf;
 }
 
+.welcome-box{
+    background-color: #90caf9;
+    margin: 2rem;
+    padding: 1.5rem;
+    border-radius: 25px;
+    width: fit-content;
+}
+
+.welcome-title{
+    font-size: 2rem;
+    margin: 0.5rem;
+}
+
+.user-email{
+    color: #333;
+    margin: 0.5rem;
+}
+
+.user-age{
+    color: #333;
+    margin: 0 0.5rem;
+    font-size: 0.8rem;
+}
+
 .main-title{
     text-align: center;
     font-size: 3rem;
@@ -59,7 +83,16 @@ body{
 #see-cart-button{
     display: block;
     margin: 1rem auto;
-    padding: 1rem;
-    background-color: #87bebe;
-    border: 1px solid black;
+}
+
+.item-counter-container{
+    display: flex;
+    height: 2rem;
+    margin: 1rem;
+    align-items: center;
+    gap: 1rem;
+}
+
+.counter{
+    margin: 0
 }

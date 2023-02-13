@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const uploader = require('../../utils')
+const { uploader } = require('../../utils')
 const ProductMongoManager = require('../../daos/mongoManager/product.manager');
 const productService = new ProductMongoManager();
 

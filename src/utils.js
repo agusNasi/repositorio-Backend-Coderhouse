@@ -1,6 +1,8 @@
 const multer = require('multer')
 const path = require('path')
+const bcrypt = require('bcrypt')
 
+// Multer
 const storage = multer.diskStorage({
     destination: (req, file, cb)=>{
         cb(null, path.resolve(__dirname, '../public/img'))
@@ -12,4 +14,13 @@ const storage = multer.diskStorage({
 
 const uploader = multer({storage})
 
-module.exports = uploader
+//Bcrypt
+const createHash = password =>{
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+}
+
+const isValidPassword = (user, password) =>{
+    return bcrypt.compareSync(password, user.password)
+}
+
+module.exports = {uploader, createHash, isValidPassword}

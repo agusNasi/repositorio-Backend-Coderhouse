@@ -19,21 +19,6 @@ router.get('/',async (req, res) =>{
     }
 })
 
-router.post('/', async(req, res)=>{
-    try {
-        const addCart = await productService.addCart()
-        res.send({
-            status: 'success',
-            cart: addCart
-        })
-    } catch (error) {
-        res.status(500).send({
-            status: "error",
-            error: error.message
-        })
-    }
-})
-
 router.get('/:cid', async(req, res) => {
     const id = req.params.cid
     try {
@@ -51,10 +36,27 @@ router.get('/:cid', async(req, res) => {
 
 })
 
+router.post('/', async(req, res)=>{
+    try {
+        const addCart = await productService.addCart()
+        res.send({
+            status: 'success',
+            cart: addCart
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
+
+
 router.post('/:cid/product/:pid', async(req,res)=>{
     try {
         const {cid, pid} = req.params
-        const addProduct = await productService.addProductToCart(cid, pid)
+        const amount = +req.body.amount
+        const addProduct = await productService.addProductToCart(cid, pid, amount)
         res.send({
             status: 'success',
             newCart: addProduct
@@ -65,7 +67,7 @@ router.post('/:cid/product/:pid', async(req,res)=>{
             error: error.message
         })
     }
-});
+})
 
 router.put('/:cid', async (req, res) =>{
     const { cid } = req.params
