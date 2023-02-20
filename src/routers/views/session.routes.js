@@ -6,9 +6,7 @@ const passport = require('passport')
 
 const router = Router()
 
-router.get('/', (req, res)=>{
-    res.send('Session')
-})
+
 
 router.post('/register',
  passport.authenticate('register', {failureRedirect: '/api/session/failRegister'}), 
@@ -34,6 +32,7 @@ router.post('/login',
             lastName: req.user.lastName,
             email: req.user.email,
             age: req.user.age,
+            githubLogin: req.user.githubLogin,
             role: 'user'
         } 
         req.session.user = userSession
@@ -52,16 +51,37 @@ router.get('/failLogin', (req,res)=>{
     res.send({error: 'Failed Login'})
 })
 
+router.get('/github', 
+    passport.authenticate('github', { scope: ['user:email'] }
+))
+
+router.get('/github/callback',
+    passport.authenticate('github', {failureRedirect: '/api/session/failLogin'}),
+    async (req, res) =>{
+        const sessionUser = {
+            name: req.user.name,
+            lastName: req.user.lastName,
+            age: req.user.age,
+            email: req.user.email,
+            githubLogin: req.user.githubLogin,
+            role: 'user'
+        }
+        req.session.user = sessionUser
+        res.redirect('/products')
+    }
+)
+
 router.get('/logout', async (req, res)=>{
     try {
-        req.session.destroy(err => {
+        await req.session.destroy(err => {
             if (err) {
               console.log(err);
             }
             else {
-              res.clearCookie('session')
+              res.clearCookie('start-solo');
+              res.redirect('/');
             }
-        })
+          })
     } catch (error) {
         res.status(500).send({
             status: 'error',

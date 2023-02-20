@@ -19,3 +19,8 @@
 .signup-anchor:hover{
     color: #2865e7;
 }
+
+.github-login{
+    margin: auto;
+    display: block;
+}
