@@ -15,7 +15,6 @@ router.get('/failRegister', (req,res)=>{
 })
 
 router.post('/login', 
-    roleMiddleware, 
     passportCall('login', {failureRedirect: '/api/session/failLogin'}),
     SessionsController.login
 )
@@ -35,6 +34,8 @@ router.get('/github/callback',
 
 router.get('/logout', SessionsController.logout)
 
-router.get('/current', SessionsController.currentSession)
+router.get('/current', 
+    passportCall('jwt'),
+    SessionsController.currentSession)
 
 module.exports = router

@@ -2,15 +2,14 @@ const express = require('express')
 const apiRoutes = require('./routers/app.routers')
 const path = require('path')
 const handlebars = require('express-handlebars')
+const helpers = require('handlebars-helpers')
 const viewsRoutes = require('./routers/views/views.routes')
 const { Server } = require('socket.io')
-const session = require('express-session')
-const MongoStore = require('connect-mongo')
 const passport = require('passport')
 const initializePassport = require('./config/passport.config')
 const { logGreen, logCyan, logRed } = require('./utils/console.utils')
 const flash = require('connect-flash')
-const options = require('./config/options')
+const cookieParser = require('cookie-parser')
 require('./config/dbConfig')
 
 const PORT = 8080
@@ -20,31 +19,22 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended:true }))
 app.use('/statics', express.static(path.resolve(__dirname, '../public')))
-app.use(session({
-    name: 'session',
-    secret:'contraseña123' ,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24,
-        httpOnly: true
-    },
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: options.mongoDB.url,
-        ttl: 3600
-    })
-}))
+app.use(cookieParser())
 initializePassport()
 app.use(passport.initialize())
-app.use(passport.session())
 app.use(flash())
 
-//Main Routes
+//Router
 app.use('/api', apiRoutes)
 app.use('/', viewsRoutes)
 
 //Templates
-app.engine('handlebars', handlebars.engine())
+const math = helpers.math();
+app.engine('handlebars', handlebars.engine({
+    helpers: {
+        math
+    }
+}))
 app.set('views', path.resolve(__dirname, './views'));
 app.set('view engine', 'handlebars');
 

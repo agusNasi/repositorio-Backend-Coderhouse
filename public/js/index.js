@@ -25,12 +25,15 @@ const seeCart = async (event) =>{
 
 const decreaseAmount = (event) =>{
     const amount = + event.target.nextElementSibling.textContent
-    if (amount > 0){
+    if (amount > 1){
         event.target.nextElementSibling.textContent = amount - 1
     }
 }
 
 const increaseAmount = (event) =>{
-    const amount = + event.target.previousElementSibling.textContent
-    event.target.previousElementSibling.textContent = amount + 1
+    const stock = +event.target.parentNode.previousElementSibling.textContent.split(' ')[0]
+    const amount = +event.target.previousElementSibling.textContent
+    if(amount < stock){
+        event.target.previousElementSibling.textContent = amount + 1
+    }
 }

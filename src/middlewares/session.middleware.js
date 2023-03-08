@@ -1,6 +1,8 @@
+const { SESSION_KEY } = require('../constants/session.constants')
+
 const sessionMiddleware = async (req, res, next) => {
-  const user = await req.session.user;
-  if (user) {
+  const cookies = req.cookies
+  if (Object.keys(cookies).includes(SESSION_KEY)) {
     res.redirect('/products');
   } else {
     next();

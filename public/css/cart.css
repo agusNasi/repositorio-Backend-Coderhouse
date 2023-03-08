@@ -1,3 +1,48 @@
+body{
+    background-color: #dfdfdf;
+}
+
+.cart-title{
+    text-align: center;
+    font-size: 3rem;
+}
+
+.clear-button{
+    display: block;
+    margin: auto;
+    background-color: #f44336;
+}
+
+.clear-button:hover{
+    background-color: #c5281c;
+}
+
 .product-item{
     background-color: #adcedb;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.product-title{
+    font-weight: bolder;
+    margin: 0.5rem 0;
+}
+
+.product-price, .product-amount{
+    margin: 0;
+}
+
+.remove-button{
+    margin: 0.5rem 0;
+    background-color: #ffeb3b;
+}
+
+.quantity-tag{
+    font-weight: bolder;
+}
+
+.subtotal{
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+    text-decoration: underline;
 }

@@ -1,73 +1,55 @@
-const HTTP_STATUS = require ("../constants/api.constants.js")
+const HTTP_STATUS = require ("../constants/api.constants.js");
+const { SESSION_KEY } = require("../constants/session.constants.js");
 const { apiSuccessResponse } = require("../utils/api.utils.js");
 const HttpError = require("../utils/error.utils");
+const { generateToken } = require("../utils/session.utils.js");
+
 
 class SessionsController{
 
     static async login(req, res, next){
+        const user = req.user;
         try {
-            if(!req.user){
+            if(!user){
                 throw new HttpError(HTTP_STATUS.BAD_REQUEST, 'User not found')
             }
-            const userSession = {
-                firstName: req.user.firstName,
-                lastName: req.user.lastName,
-                email: req.user.email,
-                age: req.user.age,
-                cart: req.user.cart,
-                role: 'user'
-            } 
-            req.session.user = userSession
-            req.session.save(err => {
-                if (err){
-                    logRed('session error: ', err);
-                } 
-                else {
-                    res.redirect('/products');
-                }
-            })
+            const access_token = generateToken(user);
+            res.cookie(SESSION_KEY, access_token, {
+              maxAge: 60 * 60 * 24 * 1000,
+              httpOnly: true
+            });
+            const response = apiSuccessResponse("User logged in successfully!");
+            // return res.json(response);
+            res.redirect('/products');
         } catch (error) {
             next(error)
         }
     }   
 
     static async loginGithub(req, res, next){
-        try {
-            const sessionUser = {
-                firstName: req.user.firstName,
-                lastName: req.user.lastName,
-                age: req.user.age,
-                email: req.user.email,
-                githubLogin: req.user.githubLogin,
-                role: 'user',
-                cart: req.user.cart
-            }
-            req.session.user = sessionUser
-            res.redirect('/products')
-        } catch (error) {
-            next(error)
-        }
+        const user = req.user;
+        const access_token = generateToken(user);
+        res.cookie(SESSION_KEY, access_token, {
+        maxAge: 60 * 60 * 24 * 1000,
+        httpOnly: true
+        });
+        const response = apiSuccessResponse("User logged in successfully with github!");
+        // return res.json(response);
+        res.redirect('/products');
     }
 
     static async logout(req, res, next){
         try {
-            await req.session.destroy(err => {
-                if (err) {
-                  logRed(err);
-                }
-                else {
-                  res.clearCookie('start-solo');
-                  res.redirect('/');
-                }
-              })
+            res.clearCookie(SESSION_KEY);
+            res.redirect('/');
         } catch (error) {
             next(error) 
         }
     }
 
     static async currentSession(req, res, next){
-        const response = apiSuccessResponse(req.session.user)
-        return res.status(HTTP_STATUS.OK).json(response)
+        const response = apiSuccessResponse(req.user);
+        return res.json(response);
     }
 }
 
