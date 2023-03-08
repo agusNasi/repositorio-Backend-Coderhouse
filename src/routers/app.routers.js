@@ -1,15 +1,19 @@
-const { Router } = require('express');
-const productsRoutes = require('./products/products.routes');
-const cartsRouter = require('./carts/carts.routes');
-const chatRoutes = require('./views/chat.router');
-const sessionRoutes = require('./views/session.routes');
+const { Router } = require('express')
+const productsRoutes = require('./products/products.routes')
+const cartRoutes = require('./carts/carts.routes')
+const chatRoutes = require('./chat/chat.routes')
+const sessionRoutes = require('./session/session.routes')
+const userRoutes = require('./users/users.routes')
+const errorMiddleware = require('../middlewares/error.middleware')
 
-const router = Router();
+const router = Router()
 
-router.use('/products', productsRoutes);
-router.use('/carts', cartsRouter);
-router.use('/chat', chatRoutes);
-router.use('/session', sessionRoutes);
+router.use('/products', productsRoutes)
+router.use('/carts', cartRoutes)
+router.use('/chat', chatRoutes)
+router.use('/session', sessionRoutes)
+router.use('/users', userRoutes)
 
+router.use(errorMiddleware)
 
-module.exports = router;
+module.exports = router

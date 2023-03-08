@@ -84,7 +84,7 @@ body{
     color: #555;
 }
 
-#see-cart-button{
+.see-cart-button{
     display: block;
     margin: 1rem auto;
 }

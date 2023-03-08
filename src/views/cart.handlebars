@@ -1,7 +1,8 @@
 <h1>Cart</h1>
-<div id="{{cartId}}" class="cart-list">
-{{#if products}}
-    {{#each products}}
+<div class="cart-list" id={{cart._id}}>
+{{#if cart.products}}
+    <button onclick="clearCart(event)">Clear cart</button>
+    {{#each cart.products}}
         <div id={{product._id}} class="product-item">
             <p>{{product.title}}</p>
             <p>{{product.price}}</p>
