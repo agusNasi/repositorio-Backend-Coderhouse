@@ -6,7 +6,7 @@ const { createHash, isValidPassword } = require('../utils/bcrypt.utils')
 const CartManagerMongo = require('../models/daos/mongo/CartManagerMongo')
 const UserManagerMongo = require('../models/daos/mongo/UserManagerMongo')
 const { logRed } = require('../utils/console.utils')
-const { cookieExtractor } = require('../utils/session.utils');
+const { cookieExtractor } = require('../utils/session.utils')
 const { SECRET_KEY } = require('../constants/session.constants')
 
 const usersDao = new UserManagerMongo()
@@ -79,7 +79,7 @@ const initializePassport = () => {
     passport.use(
         new GithubStrategy({
             clientID: 'Iv1.edc0e8c111cd9b2e',
-            clientSecret: '2b7480f4afea85fdee9a0accc529a098fe73d800',
+            clientSecret: '39526bab87299071c5ab6b1c38578cad6c8418a7',
             callbackURL: 'http://localhost:8080/api/session/github/callback'
         },
             async (accessToken, refreshToken, profile, done) => {
@@ -122,10 +122,7 @@ const initializePassport = () => {
         }
     }
     ))
-
-
 }
-
 
 passport.serializeUser((user, done) => {
     done(null, user._id);
