@@ -1,12 +1,21 @@
 <div>
     <div class="welcome-box z-depth-2">
-        <h3 class="welcome-title">Welcome {{user.firstName}} {{user.lastName}} <span class="user-role">({{user.role}})</span></h3>
-        <p class="user-email">{{user.email}}</p>
-        {{#if user.age}}
-            <p class="user-age">{{user.age}} years old</p>
-        {{/if}}
-        {{#if user.githubLogin}}
-            <p class="github-user-tag">(Registered with Github)</p>
+        <div class="info-section">
+            <h3 class="welcome-title">Welcome {{user.firstName}} {{user.lastName}} <span class="user-role">({{user.role}})</span></h3>
+            <p class="user-email">{{user.email}}</p>
+            {{#if user.age}}
+                <p class="user-age">{{user.age}} years old</p>
+            {{/if}}
+            {{#if user.githubLogin}}
+                <p class="github-user-tag">(Registered with Github)</p>
+            {{/if}}
+        </div>
+        {{#if user.profilePic}}
+            <div class="pic-section">
+                <div class="profile-pic-container">
+                    <img src="../../statics/img/{{user.profilePic.originalName}}" alt="">
+                </div>
+            </div>
         {{/if}}
     </div>
     <h1 class="main-title">Our products</h1>

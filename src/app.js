@@ -1,5 +1,5 @@
 const express = require('express')
-const apiRoutes = require('./routers/app.routers')
+const apiRouter = require('./routers/app.routers')
 const path = require('path')
 const handlebars = require('express-handlebars')
 const helpers = require('handlebars-helpers')
@@ -10,9 +10,8 @@ const initializePassport = require('./config/passport.config')
 const { logGreen, logCyan, logRed } = require('./utils/console.utils')
 const flash = require('connect-flash')
 const cookieParser = require('cookie-parser')
-require('./config/dbConfig')
+const { PORT } = require('./config/enviroment.config')
 
-const PORT = 8080
 const app = express()
 
 //Middlewares
@@ -25,7 +24,7 @@ app.use(passport.initialize())
 app.use(flash())
 
 //Router
-app.use('/api', apiRoutes)
+app.use('/api', apiRouter)
 app.use('/', viewsRoutes)
 
 //Templates

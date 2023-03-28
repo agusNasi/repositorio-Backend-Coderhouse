@@ -3,20 +3,25 @@ const productModel = require('../../schemas/product.model')
 const { logGreen, logCyan } = require('../../../utils/console.utils')
 const { HttpError } = require('../../../utils/error.utils')
 const HTTP_STATUS = require('../../../constants/api.constants')
+const MongoManager = require('../../db/mongo/mongo.manager')
 
-class CartManagerMongo {
+class CartMongoDao {
 
-    async getCarts() {
+    constructor(){
+        MongoManager.connect()
+    }
+
+    async getAll() {
         const carts = await cartModel.find()
         return carts
     }
 
-    async getCartById(id) {
+    async getById(id) {
         const cart = await cartModel.findById(id).lean()
         return cart
     }
 
-    async addCart(){
+    async add(){
         const newCart = await cartModel.create({})
         logCyan('New cart created')
         return newCart
@@ -76,4 +81,4 @@ class CartManagerMongo {
     }
 }
 
-module.exports = CartManagerMongo
+module.exports = CartMongoDao

@@ -1,9 +1,9 @@
-const UserManagerMongo = require("../models/daos/mongo/UserManagerMongo");
+const UserMongoDao = require("../models/daos/mongo/UserMongoDao");
 const HTTP_STATUS = require ("../constants/api.constants.js")
 const { apiSuccessResponse } = require("../utils/api.utils.js");
 const HttpError = require("../utils/error.utils");
 
-const usersDao = new UserManagerMongo()
+const usersDao = new UserMongoDao()
 
 class UsersController{
 
@@ -34,6 +34,13 @@ class UsersController{
     static async addUser(req,res,next) {
         const newUser = req.body
         try {
+            if(req.file){
+                const paths = {
+                    path: req.file.path,
+                    originalName: req.file.originalname  
+                    }  
+                newUser.profilePic = paths
+            }
             const addUser = await usersDao.addUser(newUser)
             const response = apiSuccessResponse(addUser)
             return res.status(HTTP_STATUS.CREATED).json(response)

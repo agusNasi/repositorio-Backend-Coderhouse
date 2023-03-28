@@ -1,9 +1,11 @@
+const enviroment = require('./enviroment.config')
+
 const options = {
     fileSystem: {
         productsFileName: "products.json"
     },
     mongoDB: {
-        url: "mongodb+srv://admin:coder@ecommerce.qhlhazv.mongodb.net/test"
+        url: enviroment.MONGO_URI
     }
 }
 

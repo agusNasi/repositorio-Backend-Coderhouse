@@ -2,10 +2,15 @@ const productModel = require('../../schemas/product.model')
 const { logCyan, logYellow } = require('../../../utils/console.utils')
 const HttpError = require('../../../utils/error.utils')
 const HTTP_STATUS = require('../../../constants/api.constants')
+const MongoManager = require('../../db/mongo/mongo.manager')
 
-class ProductManagerMongo {
+class ProductMongoDao {
+
+    constructor(){
+        MongoManager.connect()
+    }
     
-    async getProducts({limit, page, query, sort}) {
+    async getAll({limit, page, query, sort}) {
         let filter
         if(!query){
             filter =  {}
@@ -26,7 +31,7 @@ class ProductManagerMongo {
         return products
     }
 
-     async getProductById(id) {
+     async getById(id) {
         const product = await productModel.findById(id)
         if(!product){
             throw new HttpError(HTTP_STATUS.NOT_FOUND, 'No product matches the specified ID')
@@ -34,7 +39,7 @@ class ProductManagerMongo {
         return product
     }
 
-    async addProduct(product) {
+    async add(product) {
         await productModel.create(product)
         logCyan(`${product.title} added`)
         const newProduct = {
@@ -45,13 +50,13 @@ class ProductManagerMongo {
         return newProduct
     }
 
-    async updateProduct(id, product) {
+    async updateById(id, product) {
         const updatedProduct = await productModel.updateOne({_id: id}, product)
         logCyan(`${product.title ?? 'product'} modified`)
         return updatedProduct
     }
 
-    async deleteProduct(id) {
+    async delete(id) {
         const deletedProduct = await productModel.deleteOne({_id: id})
         logYellow(`product deleted`)
         return deletedProduct   
@@ -59,4 +64,4 @@ class ProductManagerMongo {
 
 }
 
-module.exports = ProductManagerMongo
+module.exports = ProductMongoDao

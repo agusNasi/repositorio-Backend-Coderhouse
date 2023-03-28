@@ -1,15 +1,15 @@
-const CartManagerMongo = require("../models/daos/mongo/CartManagerMongo");
+const CartMongoDao = require("../models/daos/mongo/CartMongoDao");
 const HTTP_STATUS = require ("../constants/api.constants.js")
 const { apiSuccessResponse } = require("../utils/api.utils.js");
 const { HttpError } = require("../utils/error.utils");
 
-const cartsDao = new CartManagerMongo()
+const cartsDao = new CartMongoDao()
 
 class CartsController{
 
     static async getAll(req, res, next) {
         try {
-            const cart = await cartsDao.getCarts() 
+            const cart = await cartsDao.getAll() 
             const response = apiSuccessResponse(cart)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -20,7 +20,7 @@ class CartsController{
     static async getById(req, res, next) {
         const { cid } = req.params
         try {
-            const cart = await cartsDao.getCartById(cid)
+            const cart = await cartsDao.getById(cid)
             if(!cart){
                 throw new HttpError(HTTP_STATUS.NOT_FOUND, 'Cart not found')
             }
@@ -33,7 +33,7 @@ class CartsController{
 
     static async addCart(req,res,next) {
         try {
-            const addCart = await cartsDao.addCart()
+            const addCart = await cartsDao.add()
             const response = apiSuccessResponse(addCart)
             res.status(HTTP_STATUS.CREATED).json(response)
         } catch (error) {

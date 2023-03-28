@@ -2,12 +2,12 @@ const fs = require('fs/promises')
 const { existsSync } = require('fs');
 const path = require('path');
 
-class ProductManager {
+class ProductFileDao {
     constructor(filename){
         this.filePath = path.resolve(__dirname,`../../files/${filename}`)
     }
 
-    async getProducts() {
+    async getAll() {
         try{
             if (existsSync(this.filePath)){
                 const products = await fs.readFile(this.filePath, 'utf-8')
@@ -24,7 +24,7 @@ class ProductManager {
         }
     }
 
-    async getProductById(id) {
+    async getById(id) {
         const idNumber = Number(id)
         try{
             const savedProducts = await this.getProducts();
@@ -39,7 +39,7 @@ class ProductManager {
         }
     }
 
-    async addProduct(product) {
+    async add(product) {
         try{
             const savedProducts = await this.getProducts()
             const DuplicatedProduct = savedProducts.find(item => item.code == product.code)
@@ -67,7 +67,7 @@ class ProductManager {
         }
     }
 
-    async updateProduct(id, product) {
+    async updateById(id, product) {
         const idNumber = Number(id)
         try{
             const savedProducts = await this.getProducts()
@@ -90,7 +90,7 @@ class ProductManager {
         }
     }
 
-    async deleteProduct(id) {
+    async delete(id) {
         const idNumber = Number(id)
         try{
             const savedProducts = await this.getProducts();
@@ -107,7 +107,7 @@ class ProductManager {
     }
 }
 
-module.exports = ProductManager
+module.exports = ProductFileDao
 
 
 

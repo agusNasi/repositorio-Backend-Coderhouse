@@ -1,5 +1,5 @@
-const SECRET_KEY = 'password123'
-const SESSION_KEY = 'mysession'
+const { SECRET_KEY, SESSION_KEY } = require('../config/enviroment.config')
+
 
 module.exports = {
     SECRET_KEY,
