@@ -14,6 +14,7 @@ const { PORT } = require('./config/enviroment.config')
 
 const app = express()
 
+
 //Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended:true }))

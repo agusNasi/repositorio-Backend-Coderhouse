@@ -19,10 +19,10 @@
         {{/if}}
     </div>
     <h1 class="main-title">Our products</h1>
-    <button class="see-cart-button waves-effect waves-light btn-small" onclick="seeCart(event)" id={{user.cart}}>See Cart</button>
+    <button class="see-cart-button waves-effect waves-light btn-large indigo" onclick="seeCart(event)" id={{user.cart}}>See Cart</button>
     <div id="product-list-container">
         {{#each products}}
-            <div class="product-item" id={{_id}} >
+            <div class="product-item" id={{id}} >
                 <p id="item-title">{{title}}</p>
                 <p>{{description}}</p>
                 <p class="price-tag">${{price}}</p>
@@ -33,13 +33,21 @@
                 {{else}}
                     <p id="no-image">no image</p>
                 {{/if}}
-                <p class="stock-tag">{{stock}} restantes</p>
-                <div class="item-counter-container">
-                    <button class="less-button-counter" onclick="decreaseAmount(event)">-</button>
-                    <p class="counter">1</p>
-                    <button class="more-button-counter" onclick="increaseAmount(event)">+</button>
+                {{#if stock}}
+                    <p class="stock-tag">{{stock}} in stock</p>
+                {{/if}}
+                <div class="button-section-container">
+                    <div class="item-counter-container">
+                        <button class="less-button-counter" onclick="decreaseAmount(event)">-</button>
+                        <p class="counter">1</p>
+                        <button class="more-button-counter" onclick="increaseAmount(event)">+</button>
+                    </div>
+                    {{#if status}}
+                        <button id="add-to-cart-button" class="waves-effect waves-light btn-small" onclick="addToCart(event)">Add to cart</button>
+                    {{else}}
+                        <button id="add-to-cart-button" class="waves-effect waves-light btn-small" onclick="addToCart(event)" disabled>Sold out</button>
+                    {{/if}}
                 </div>
-                <button id="add-to-cart-button" class="waves-effect waves-light btn-small" onclick="addToCart(event)">Add to cart</button>
             </div>
         {{/each}}
     </div>

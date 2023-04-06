@@ -1,14 +1,7 @@
 const productModel = require('../../schemas/product.model')
 const { logCyan, logYellow } = require('../../../utils/console.utils')
-const HttpError = require('../../../utils/error.utils')
-const HTTP_STATUS = require('../../../constants/api.constants')
-const MongoManager = require('../../db/mongo/mongo.manager')
 
 class ProductMongoDao {
-
-    constructor(){
-        MongoManager.connect()
-    }
     
     async getAll({limit, page, query, sort}) {
         let filter
@@ -31,37 +24,34 @@ class ProductMongoDao {
         return products
     }
 
-     async getById(id) {
-        const product = await productModel.findById(id)
-        if(!product){
-            throw new HttpError(HTTP_STATUS.NOT_FOUND, 'No product matches the specified ID')
-        }
+     async getById(pid) {
+        const product = await productModel.findById(pid)
         return product
     }
 
-    async add(product) {
-        await productModel.create(product)
-        logCyan(`${product.title} added`)
+    async add(payload) {
+        await productModel.create(payload)
+        logCyan(`${payload.title} added`)
         const newProduct = {
-            status: product.status || true,
-            thumbnails: product.thumbnails || [],
-            ...product
+            status: payload.status || true,
+            thumbnails: payload.thumbnails || [],
+            ...payload
         }
         return newProduct
     }
 
-    async updateById(id, product) {
-        const updatedProduct = await productModel.updateOne({_id: id}, product)
-        logCyan(`${product.title ?? 'product'} modified`)
+    async updateById(pid, payload) {
+        const updatedProduct = await productModel.updateOne({_id: pid}, payload)
+        logCyan(`${payload.title ?? 'product'} modified`)
         return updatedProduct
     }
 
-    async delete(id) {
-        const deletedProduct = await productModel.deleteOne({_id: id})
+    async delete(pid) {
+        const deletedProduct = await productModel.deleteOne({_id: pid})
         logYellow(`product deleted`)
         return deletedProduct   
     }
 
 }
 
-module.exports = ProductMongoDao
+module.exports = {ProductMongoDao}

@@ -38,4 +38,10 @@ router.get('/chat',
     ViewsController.chat
 )
 
+router.get('/ticket/:tid',
+    authMiddleware,
+    passportCall('jwt'),
+    ViewsController.ticket
+)
+
 module.exports = router

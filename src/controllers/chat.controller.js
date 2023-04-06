@@ -1,15 +1,15 @@
-const ChatMongoDao = require("../models/daos/mongo/ChatMongoDao");
+const getDaos = require('../models/daos/factory')
 const HTTP_STATUS = require ("../constants/api.constants.js")
 const { apiSuccessResponse } = require("../utils/api.utils.js");
 const HttpError = require("../utils/error.utils");
 
-const chatDao = new ChatMongoDao()
+const { chatsDao } = getDaos()
 
 class ChatController{
 
     static async getAll(req, res, next) {
         try {
-            const messages = await chatDao.getAll()
+            const messages = await chatsDao.getAll()
             res.render('chat', {
                 title: "Super Chat!",
                 styles:"chat.css",
@@ -19,14 +19,14 @@ class ChatController{
         }
     }
 
-    static async addMessage(req,res,next) {
+    static async addMessage(req, res, next) {
         const io = req.app.get('io')
         const newMessage = req.body
         try {
             if(!Object.keys(newMessage).length){
                 throw new HttpError(HTTP_STATUS.BAD_REQUEST, 'Missing message')
             }
-            const addMessage = await chatDao.add(newMessage)
+            const addMessage = await chatsDao.add(newMessage)
             io.emit('newMessage', newMessage)
             const response = apiSuccessResponse(addMessage)
             return res.status(HTTP_STATUS.CREATED).json(response)
@@ -40,7 +40,7 @@ class ChatController{
         const { mid } = req.params
         try {
             io.emit('deleteMessage', {})
-            const deleteMessage = await chatDao.delete(mid)
+            const deleteMessage = await chatsDao.delete(mid)
             const response = apiSuccessResponse(deleteMessage)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -52,7 +52,7 @@ class ChatController{
         const io = req.app.get('io')
         try {
             io.emit('cleanChat', {})
-            const deleteMessages = await chatDao.deleteAll()
+            const deleteMessages = await chatsDao.deleteAll()
             const response = apiSuccessResponse(deleteMessages)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {

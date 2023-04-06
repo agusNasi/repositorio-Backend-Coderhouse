@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
-const mongoosePaginate = require('mongoose-paginate-v2')
 
 const userCollection = 'users'
 
 const userSchema = new mongoose.Schema({
-    firstName: { 
+    first_name: { 
         type: String
     },
-    lastName: { 
+    last_name: { 
         type: String
     },
     email: { 
@@ -20,7 +19,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String
     },
-    githubLogin:{
+    github_login:{
         type: String
     },
     role: {
@@ -34,7 +33,7 @@ const userSchema = new mongoose.Schema({
         ref: 'carts',
         required: true
     },
-    profilePic:{
+    profile_pic:{
         type: Object
     }
 })

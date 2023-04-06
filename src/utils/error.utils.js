@@ -1,5 +1,5 @@
 class HttpError {
-  constructor(status = 500, statusText, error) {
+  constructor(statusText, status = 500, error) {
     this.status = status;
     this.description = statusText;
     error && (this.details = error);

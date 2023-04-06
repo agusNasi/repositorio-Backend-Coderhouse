@@ -1,28 +1,18 @@
-const ProductMongoDao = require("../models/daos/mongo/ProductMongoDao");
+const getDaos = require('../models/daos/factory')
 const HTTP_STATUS = require ("../constants/api.constants.js")
 const { apiSuccessResponse } = require("../utils/api.utils.js");
-const HttpError = require("../utils/error.utils");
+const ProductsService = require('../services/products.service.js');
+const { AddProductDTO, GetProductDTO, UpdateProductDTO } = require('../models/dtos/products.dto.js');
 
-const productsDao = new ProductMongoDao()
+const productsService = new ProductsService()
 
 class ProductsController{
 
     static async getAll(req, res, next) {
+        const filter = req.query
         try {
-            const products = await productsDao.getAll(req.query)
-            const data ={
-                status: 'success',
-                payload: products.docs,
-                totalPages: products.totalPages,
-                prevPage: products.prevPage,
-                nextPage: products.nextPage,
-                page: products.page,
-                hasPrevPage: products.hasPrevPage,
-                hasNextPage: products.hasNextPage,
-                prevLink: null,
-                nexLink: null
-            }
-            const response = apiSuccessResponse(data)
+            const products = await productsService.getProducts(filter)
+            const response = apiSuccessResponse(products)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
             next(error)
@@ -32,10 +22,7 @@ class ProductsController{
     static async getById(req, res, next) {
         const { pid } = req.params
         try {
-            const product = await productsDao.getById(pid)
-            if(!product){
-                throw new HttpError(HTTP_STATUS.NOT_FOUND, 'product not found')
-            }
+            const product = await productsService.getProductById(pid)
             const response = apiSuccessResponse({product})
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -43,23 +30,11 @@ class ProductsController{
         }
     }
 
-    static async addProduct(req,res,next) {
-        const newProduct = req.body
+    static async addProduct(req, res, next) {
+        const productPayload = req.body
+        const { files } = req
         try {
-            if(req.files){
-                const paths = req.files.map(file => {
-                    return {path: file.path,
-                     originalName: file.originalname  
-                    }  
-                    })
-                newProduct.thumbnails = paths
-            }else{
-                newProduct.thumbnails = []
-            }
-            if(!Object.keys(newProduct).length){
-                throw new HttpError(HTTP_STATUS.BAD_REQUEST, 'Missing product')
-            }
-            const addProduct = await productsDao.add(newProduct)
+            const addProduct = await productsService.createProduct(productPayload, files)
             const response = apiSuccessResponse(addProduct)
             return res.status(HTTP_STATUS.CREATED).json(response)
         } catch (error) {
@@ -68,13 +43,11 @@ class ProductsController{
     }
 
     static async updateProduct(req, res, next){
-        const productId = req.params.pid
+        const { pid } = req.params
+        const productPayload = req.body
         try {
-            if(req.body.id){
-                throw new HttpError(HTTP_STATUS.BAD_REQUEST, 'No id must be provided')
-            }
-            const updateProduct = await productsDao.updateById(productId, req.body)
-            const response = apiSuccessResponse(updateProduct)
+            const updatedProduct = productsService.updateProduct(pid, productPayload)
+            const response = apiSuccessResponse(updatedProduct)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
             next(error)
@@ -84,7 +57,7 @@ class ProductsController{
     static async deleteProduct(req, res, next){
         const { pid } = req.params
         try {
-            const deleteProduct = await productsDao.delete(pid)
+            const deleteProduct = await productsService.deleteProduct(pid)
             const response = apiSuccessResponse(deleteProduct)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {

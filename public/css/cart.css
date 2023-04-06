@@ -2,6 +2,12 @@ body{
     background-color: #dfdfdf;
 }
 
+.cart-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .cart-title{
     text-align: center;
     font-size: 3rem;
@@ -21,6 +27,8 @@ body{
     background-color: #adcedb;
     margin: 1rem;
     padding: 0.5rem 1rem;
+    width: 90vw;
+    
 }
 
 .product-title{
@@ -45,4 +53,9 @@ body{
     font-size: 1.3rem;
     margin: 0.5rem 0;
     text-decoration: underline;
+}
+
+.purchase-button, .see-ticket-button{
+    display: block;
+    margin: 1rem auto;
 }

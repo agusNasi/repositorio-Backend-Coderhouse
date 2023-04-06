@@ -26,7 +26,7 @@ Swal.fire({
 })
 .then(result => {
     user = result.value
-    form.innerHTML +=`<input type="text" value=${user} name="user" id="user-input"hidden>`
+    form.innerHTML +=`<input type="text" value=${user} name="user" id="user-input" hidden>`
     socket.emit('login', user)
     if (user === "admin") {
         cleanButton.removeAttribute('hidden')
@@ -50,20 +50,23 @@ const Toast = Swal.mixin({
 
 //Message Send
 
-form.addEventListener('submit', event =>{
-    event.preventDefault()
-    const formData = new FormData(form)
-    const payload = new URLSearchParams(formData)
-
-    const requestOptions = {
-        method: 'POST',
-        body: payload
+form.addEventListener('submit', async (event) =>{
+    try {
+        event.preventDefault()
+        const formData = new FormData(form)
+        const payload = new URLSearchParams(formData)
+        const requestOptions = {
+            method: 'POST',
+            body: payload
+        }
+        const sendMessage = await fetch(form.action, requestOptions)
+        if(sendMessage.status === 403){
+            alert('Only users can send messages')
+        }
+        form.reset()
+    } catch (error) {
+        console.log(error)
     }
-    fetch(form.action, requestOptions)
-    .then(response => response.json())
-    .catch(error => console.log(error))
-
-    form.reset()
 })
 
 //Delete Messages

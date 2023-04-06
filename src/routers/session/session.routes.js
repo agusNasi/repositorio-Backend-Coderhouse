@@ -37,6 +37,7 @@ router.get('/logout', SessionsController.logout)
 
 router.get('/current', 
     passportCall('jwt'),
-    SessionsController.currentSession)
+    SessionsController.currentSession
+)
 
 module.exports = router

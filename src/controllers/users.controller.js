@@ -1,16 +1,21 @@
-const UserMongoDao = require("../models/daos/mongo/UserMongoDao");
+const getDaos = require('../models/daos/factory')
 const HTTP_STATUS = require ("../constants/api.constants.js")
 const { apiSuccessResponse } = require("../utils/api.utils.js");
-const HttpError = require("../utils/error.utils");
+const { AddUserDTO, GetUserDTO, UpdateUserDTO } = require('../models/dtos/users.dto.js')
+const UsersService = require('../services/users.service.js');
 
-const usersDao = new UserMongoDao()
+const usersService = new UsersService()
 
 class UsersController{
 
     static async getAll(req, res, next) {
         try {
-            const users = await usersDao.getAll()
-            const response = apiSuccessResponse(users)
+            const users = await usersService.getAll()
+            const usersPayload = []
+            users.forEach(user => {
+                usersPayload.push(new GetUserDTO(user))
+            });
+            const response = apiSuccessResponse(usersPayload)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
             next(error)
@@ -20,29 +25,22 @@ class UsersController{
     static async getById(req, res, next) {
         const { uid } = req.params
         try {
-            const user = await usersDao.getById(uid)
-            if(!user){
-                throw new HttpError(HTTP_STATUS.NOT_FOUND, 'user not found')
-            }
-            const response = apiSuccessResponse(user)
+            const user = await usersService.getById(uid)
+            const userPayload = new GetUserDTO(user)
+            const response = apiSuccessResponse(userPayload)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
             next(error)
         }
     }
 
-    static async addUser(req,res,next) {
-        const newUser = req.body
+    static async addUser(req, res, next) {
+        const payload = req.body
+        const { file } = req
         try {
-            if(req.file){
-                const paths = {
-                    path: req.file.path,
-                    originalName: req.file.originalname  
-                    }  
-                newUser.profilePic = paths
-            }
-            const addUser = await usersDao.addUser(newUser)
-            const response = apiSuccessResponse(addUser)
+            const userPayload = new AddUserDTO(payload)
+            const newUser = await usersService.createUser(userPayload, file)
+            const response = apiSuccessResponse(newUser)
             return res.status(HTTP_STATUS.CREATED).json(response)
         } catch (error) {
             next(error)
@@ -51,12 +49,10 @@ class UsersController{
 
     static async updateUser(req, res, next){
         const { uid } = req.params
-        const userData = req.body
+        const payload = req.body
         try {
-            const updatedUser = await usersDao.updateUser(uid, userData)
-            if (!updatedUser) {
-                throw new HttpError(404, 'User not found');
-            }
+            const userPayload = new UpdateUserDTO(payload)
+            const updatedUser = await usersService.updateUser(uid, userPayload)
             const response = apiSuccessResponse(updatedUser)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -67,8 +63,8 @@ class UsersController{
     static async deleteUser(req, res, next){
         const { uid } = req.params
         try {
-            const deleteUser = await usersDao.deleteUser(uid)
-            const response = apiSuccessResponse(deleteUser)
+            const deletedUser = await usersService.deleteUser(uid)
+            const response = apiSuccessResponse(deletedUser)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
             next(error)

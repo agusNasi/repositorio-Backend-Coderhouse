@@ -1,10 +1,13 @@
-const ProductMongoDao = require('../models/daos/mongo/ProductMongoDao')
-const CartMongoDao = require('../models/daos/mongo/CartMongoDao')
-const ChatMongoDao = require('../models/daos/mongo/ChatMongoDao')
+const getDaos = require('../models/daos/factory')
+const CartsService = require('../services/carts.service.js')
+const ProductsService = require('../services/products.service.js')
+const TicketsService = require('../services/tickets.service.js')
 
-const productsMongoDao = new ProductMongoDao()
-const cartMongoDao = new CartMongoDao()
-const chatMongoDao = new ChatMongoDao()
+const { chatsDao, ticketsDao } = getDaos()
+
+const productsService = new ProductsService()
+const cartsService = new CartsService()
+const ticketsService = new TicketsService()
 
 class ViewsController{
 
@@ -23,28 +26,26 @@ class ViewsController{
     }
 
     static async products(req, res, next) {
-        const user = req.user
+        const { user } = req
+        const filter = req.query
         try {
-            const products = await productsMongoDao.getAll(req.query)
+            const products = await productsService.getProducts(filter)
             res.render('index', {
                 title: "E-commerce",
                 styles:"index.css",
-                products: products.docs,
+                products: products,
                 user: user
             })
         } catch (error) {
-            res.status(500).send({
-                status: "error",
-                error: error.message
-            })
+            next(error)
         }
     }
 
     static async cart(req, res, next) {
-        const cartId = req.params.cid 
-        const user = req.user
+        const { cid } = req.params 
+        const { user } = req
         try {
-            const cart = await cartMongoDao.getById(cartId)
+            const cart = await cartsService.getCartById(cid)
             res.render('cart', {
                 title: "Cart",
                 styles:"cart.css",
@@ -52,19 +53,34 @@ class ViewsController{
                 cart
             })
         } catch (error) {
-            res.status(500).send({
-                status: "error",
-                error: error.message
-            })
+            next(error)
         }
     }
 
     static async chat(req, res, next) {
-        const messages = await chatMongoDao.getAll()
-        res.render('chat', {
-            title: "Super Chat!",
-            styles:"chat.css",
-            messages})
+        try{
+            const messages = await chatsDao.getAll()
+            res.render('chat', {
+                title: "Super Chat!",
+                styles:"chat.css",
+                messages})
+        }catch (error) {
+            next(error)
+        }
+    }
+
+    static async ticket(req, res, next) {
+        const { tid } = req.params 
+        try{
+            const ticket = await ticketsService.getTicketById(tid)
+            res.render('ticket', {
+                title: "Purchase Ticket",
+                styles:"ticket.css",
+                ticket
+                })
+        }catch (error) {
+            next(error)
+        }
     }
 }
 
