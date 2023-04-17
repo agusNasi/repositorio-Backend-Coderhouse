@@ -3,6 +3,7 @@ const getDaos = require("../models/daos/factory.js");
 const { UpdateProductDTO } = require("../models/dtos/products.dto.js");
 const { GetTicketDTO, AddTicketDTO } = require("../models/dtos/ticket.dto.js");
 const { logYellow } = require("../utils/console.utils.js");
+const { generateTicketErrorInfo } = require("../utils/error.info.js");
 const HttpError = require("../utils/error.utils.js");
 
 const { ticketsDao, cartsDao, productsDao } = getDaos()
@@ -14,7 +15,7 @@ class TicketsService {
         tickets.forEach(ticket => {
             ticketsPayloadDTO.push(new GetTicketDTO(ticket))
         })
-        return tickets
+        return ticketsPayloadDTO
     }
 
     async getTicketById(tid) {
@@ -30,17 +31,19 @@ class TicketsService {
     }
 
     async createTicket(cid, payload, purchaser){
-        if(!cid){
-            throw new HttpError('Missing param', HTTP_STATUS.BAD_REQUEST)
-        }
-        if(!Object.keys(payload).length){
-            throw new HttpError('Missing products', HTTP_STATUS.BAD_REQUEST)
-        }
+        if(!cid ||!payload.length || !purchaser ){
+            CustomError.createError({
+                name: "Generate ticket error",
+                cause: generateTicketErrorInfo({cid, payload, purchaser}),
+                message: "Error trying to add product to cart",
+                code: HTTP_STATUS.BAD_REQUEST
+            })
+        }        
+        console.log(payload);
         payload.totalPrice = 0
         await payload.forEach( async item => {
             if(item.quantity > item.product.stock){
                 logYellow(`Not enough stock for this item ${item.product.title} with id: ${item.product._id}`);
-                notSold.push(item)
             }else{
                 payload.totalPrice += item.quantity * item.product.price
                 await cartsDao.deleteProductFromCart(cid, item.product._id)
@@ -58,7 +61,7 @@ class TicketsService {
         if(!amount){
             throw new HttpError('Not enough stock for purchase any product', HTTP_STATUS.BAD_REQUEST)
         }
-        const ticketPayloadDTO = new AddTicketDTO(purchaser, amount)
+        const ticketPayloadDTO = new AddTicketDTO(purchaser, amount, payload)
         const newTicket = await ticketsDao.create(ticketPayloadDTO)
         return newTicket
     }

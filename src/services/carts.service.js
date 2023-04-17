@@ -1,5 +1,7 @@
 const HTTP_STATUS = require("../constants/api.constants.js");
 const getDaos = require("../models/daos/factory.js");
+const CustomError = require("../utils/customError.js");
+const { generateCartErrorInfo } = require("../utils/error.info.js");
 const HttpError = require("../utils/error.utils.js");
 
 const { cartsDao, productsDao } = getDaos()
@@ -28,7 +30,12 @@ class CartsService {
 
     async addProductToCart(cid, pid, amount) {
         if(!cid || !pid || !amount){
-            throw new HttpError('Missing required params', HTTP_STATUS.BAD_REQUEST)
+            CustomError.createError({
+                name: "Adding product to cart error",
+                cause: generateCartErrorInfo({cid, pid, amount}),
+                message: "Error trying to add product to cart",
+                code: HTTP_STATUS.BAD_REQUEST
+            })
         }
         const cart = await cartsDao.getById(cid)
         if(!cart){
@@ -51,12 +58,6 @@ class CartsService {
             addedProduct = await cartsDao.addProductToCart(cid, pid, amount)
         }
         return addedProduct
-        //IMPLEMENTAR ESTO CUANDO SE CONFIRMA LA COMPRA
-        // const updatedProduct = {
-        //     ...product._doc,
-        //     stock: product.stock - amount
-        // }
-        // await productsDao.updateById(pid, updatedProduct)
     }
 
     async deleteProduct(cid, pid) {

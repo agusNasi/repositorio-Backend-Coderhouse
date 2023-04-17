@@ -1,5 +1,7 @@
 const HTTP_STATUS = require("../constants/api.constants.js");
 const getDaos = require("../models/daos/factory.js");
+const CustomError = require("../utils/customError.js");
+const { generateUserErrorInfo } = require("../utils/error.info.js");
 const HttpError = require("../utils/error.utils.js");
 
 const { usersDao, cartsDao } = getDaos()
@@ -22,9 +24,25 @@ class UsersService {
     }
 
     async createUser(payload, file){
-        if(!Object.keys(payload).length){
-            throw new HttpError('Missing data for user', HTTP_STATUS.BAD_REQUEST)
+        if(!firstName || !lastName || !age || !email || !password){
+            logRed('missing fields');
+            CustomError.createError({
+                name: "User creation error",
+                cause: generateUserErrorInfo({firstName, lastName, age, email}),
+                message: "Error trying to create user",
+                code: HTTP_STATUS.BAD_REQUEST
+            })
         }
+        const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+            if(!email.match(validRegex)){
+                logRed('not valid email');
+                CustomError.createError({
+                    name: "User creation error",
+                    cause: generateUserErrorInfo({firstName, lastName, age, email}),
+                    message: "Email adress not valid",
+                    code: HTTP_STATUS.BAD_REQUEST
+                })
+            }
         if(file){
             const paths = {
                 path: file.path,

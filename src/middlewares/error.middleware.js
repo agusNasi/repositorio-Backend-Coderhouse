@@ -1,9 +1,8 @@
 const HTTP_STATUS = require("../constants/api.constants.js")
-const { apiErrorResponse } = require("../utils/api.utils.js")
 
 const errorMiddleware = (error, req, res, next) => {
-  const response = apiErrorResponse(error.description || error.message, error.details || error);
-  return res.status(error.status || HTTP_STATUS.SERVER_ERROR).json(response);
+  console.log(error.cause);
+  return res.status(error.code || HTTP_STATUS.SERVER_ERROR).json({status: 'error', error: error.name});
 };
 
 module.exports = errorMiddleware
