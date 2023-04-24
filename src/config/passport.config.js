@@ -9,9 +9,6 @@ const { cookieExtractor } = require('../utils/session.utils')
 const { SECRET_KEY, CLIENT_ID, CLIENT_SECRET } = require("../config/enviroment.config.js")
 const { ADMIN_NAME, ADMIN_PASSWORD } = require('./enviroment.config')
 const { AddUserDTO, GetUserDTO } = require('../models/dtos/users.dto.js')
-const CustomError = require('../utils/customError.js')
-const { generateUserErrorInfo } = require('../utils/error.info.js')
-const HTTP_STATUS = require('../constants/api.constants.js')
 
 const { cartsDao, usersDao } = getDaos()
 
@@ -31,34 +28,16 @@ const initializePassport = () =>{
         async (req, username, password, done)=>{
             const { firstName, lastName, email, age } = req.body
             if(!firstName || !lastName || !age || !email || !password){
-                logRed('missing fields');
-                CustomError.createError({
-                    name: "User creation error",
-                    cause: generateUserErrorInfo({firstName, lastName, age, email}),
-                    message: "Error trying to create user",
-                    code: HTTP_STATUS.BAD_REQUEST
-                })
-                return done(null, false)
-            }
-            const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-            if(!email.match(validRegex)){
-                logRed('not valid email');
-                CustomError.createError({
-                    name: "User creation error",
-                    cause: generateUserErrorInfo({firstName, lastName, age, email}),
-                    message: "Email adress not valid",
-                    code: HTTP_STATUS.BAD_REQUEST
-                })
+                req.logger.error('Missing fields')
                 return done(null, false)
             }
             try {
                 const user = await usersDao.getByEmail(username)
-                const cart = await cartsDao.add()
                 if(user){
-                    const message = 'User already exist'
-                    logRed(message);
-                    return done(null, false, {message})
+                    req.logger.error('Unable to create user, email already registered')
+                    return done(null, false, 'Unable to create user, email already registered')
                 }
+                const cart = await cartsDao.add()
                 const newUser = {
                     firstName,
                     lastName, 
@@ -76,8 +55,10 @@ const initializePassport = () =>{
                 } 
                 const userPayload = new AddUserDTO(newUser)
                 let result = await usersDao.addUser(userPayload)
+                req.logger.info(`New user registered. ID: ${result._id} `)
                 return done(null, result)
             } catch (error) {
+                req.logger.error('Error getting user: ' + error)
                 return done('Error getting user: ' + error)
             }
         }
@@ -156,7 +137,6 @@ const initializePassport = () =>{
         secretOrKey: SECRET_KEY
     }, async (jwt_payload, done) =>{
         try {
-            console.log(jwt_payload);
             const userPayload = new GetUserDTO(jwt_payload)
             return done(null, userPayload)
         } catch (error) {

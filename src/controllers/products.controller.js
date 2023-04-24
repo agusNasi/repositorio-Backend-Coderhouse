@@ -35,6 +35,7 @@ class ProductsController{
         const { files } = req
         try {
             const addProduct = await productsService.createProduct(productPayload, files)
+            req.logger.info(`${productPayload.title} created`)
             const response = apiSuccessResponse(addProduct)
             return res.status(HTTP_STATUS.CREATED).json(response)
         } catch (error) {
@@ -47,6 +48,7 @@ class ProductsController{
         const productPayload = req.body
         try {
             const updatedProduct = productsService.updateProduct(pid, productPayload)
+            req.logger.info(`product ${pid} updated`)
             const response = apiSuccessResponse(updatedProduct)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -58,6 +60,7 @@ class ProductsController{
         const { pid } = req.params
         try {
             const deleteProduct = await productsService.deleteProduct(pid)
+            req.logger.info(`${pid} deleted`)
             const response = apiSuccessResponse(deleteProduct)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {

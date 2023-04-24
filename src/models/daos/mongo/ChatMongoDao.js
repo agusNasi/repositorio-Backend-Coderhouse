@@ -15,13 +15,13 @@ class ChatMongoDao {
 
     async delete(mid) {
         const cleanChat = await messageModel.deleteOne({_id: mid})
-        logYellow(`message deleted`)
+        req.logger.info(`message deleted`)
         return cleanChat  
     }
 
     async deleteAll() {
         const cleanChat = await messageModel.deleteMany()
-        logYellow(`chat cleaned`)
+        req.logger.info(`all messages has been deleted`)
         return cleanChat  
     }
 }

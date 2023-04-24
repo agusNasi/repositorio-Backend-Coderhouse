@@ -31,7 +31,6 @@ class ProductMongoDao {
 
     async add(payload) {
         await productModel.create(payload)
-        logCyan(`${payload.title} added`)
         const newProduct = {
             status: payload.status || true,
             thumbnails: payload.thumbnails || [],
@@ -42,13 +41,11 @@ class ProductMongoDao {
 
     async updateById(pid, payload) {
         const updatedProduct = await productModel.updateOne({_id: pid}, payload)
-        logCyan(`${payload.title ?? 'product'} modified`)
         return updatedProduct
     }
 
     async delete(pid) {
         const deletedProduct = await productModel.deleteOne({_id: pid})
-        logYellow(`product deleted`)
         return deletedProduct   
     }
 

@@ -1,8 +1,6 @@
 const HTTP_STATUS = require("../constants/api.constants.js");
 const getDaos = require("../models/daos/factory.js");
 const { GetProductDTO, UpdateProductDTO, AddProductDTO } = require("../models/dtos/products.dto.js");
-const CustomError = require("../utils/customError.js");
-const { generateProductErrorInfo } = require("../utils/error.info.js");
 const HttpError = require("../utils/error.utils.js");
 
 const { productsDao } = getDaos()
@@ -32,12 +30,7 @@ class ProductsService {
     async createProduct(productPayload, files){
         const { title, description, code, stock, price, category } = productPayload
         if(!title || !description || !code || !stock || !price || !category){
-            CustomError.createError({
-                name: "Product creation error",
-                cause: generateProductErrorInfo(productPayload),
-                message: "Error trying to create product",
-                code: HTTP_STATUS.BAD_REQUEST
-            })
+            throw new HttpError('Please include all the required fields', HTTP_STATUS.BAD_REQUEST)
         }
         const productPayloadDTO = new AddProductDTO(productPayload, files)
         const newProduct = productsDao.add(productPayloadDTO)
@@ -45,8 +38,8 @@ class ProductsService {
     }
 
     async updateProduct(pid, productPayload){
-        if(!pid || !Object.keys(productPayload).length){
-            throw new HttpError('Please provide an id and a payload for the product', HTTP_STATUS.BAD_REQUEST)
+        if(!pid || !productPayload){
+            throw HttpError('Please provide an id and a payload for the product', HTTP_STATUS.BAD_REQUEST)
         }
         const product = await productsDao.getById(pid)
         if(!product){

@@ -33,6 +33,7 @@ class CartsController{
     static async addCart(req, res, next) {
         try {
             const addCart = await cartsService.createCart()
+            req.logger.info('New cart created')
             const response = apiSuccessResponse(addCart)
             res.status(HTTP_STATUS.CREATED).json(response)
         } catch (error) {
@@ -45,6 +46,7 @@ class CartsController{
             const { cid, pid } = req.params
             const amount = +req.body?.amount || 1
             const addedProduct = await cartsService.addProductToCart(cid, pid, amount)
+            req.logger.info(`product ${pid} added to cart ${cid}`)
             const response = apiSuccessResponse(addedProduct)
             res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -56,6 +58,7 @@ class CartsController{
         const {cid, pid} = req.params
         try {
             const deletedProduct = await cartsService.deleteProduct(cid, pid)
+            req.logger.info(`product ${pid} removed from cart ${cid}`)
             const response = apiSuccessResponse(deletedProduct)
             res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -67,6 +70,7 @@ class CartsController{
         const { cid }= req.params
         try {
             const emptyCart = await cartsService.clearCart(cid)
+            req.logger.info(`cart ${cid} cleared`)
             const response = apiSuccessResponse(emptyCart)
             res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -81,6 +85,7 @@ class CartsController{
             const cart = await cartsService.getCartById(cid)
             const payload = cart.products
             const ticket = await ticketService.createTicket(cid, payload, purchaser)
+            req.logger.info(`Successful purchase`)
             const response = apiSuccessResponse(ticket)
             res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {

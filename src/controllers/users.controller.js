@@ -40,6 +40,7 @@ class UsersController{
         try {
             const userPayload = new AddUserDTO(payload)
             const newUser = await usersService.createUser(userPayload, file)
+            req.logger.info('New user created')
             const response = apiSuccessResponse(newUser)
             return res.status(HTTP_STATUS.CREATED).json(response)
         } catch (error) {
@@ -53,6 +54,7 @@ class UsersController{
         try {
             const userPayload = new UpdateUserDTO(payload)
             const updatedUser = await usersService.updateUser(uid, userPayload)
+            req.logger.info('User updated')
             const response = apiSuccessResponse(updatedUser)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
@@ -64,6 +66,7 @@ class UsersController{
         const { uid } = req.params
         try {
             const deletedUser = await usersService.deleteUser(uid)
+            req.logger.info('User deleted')
             const response = apiSuccessResponse(deletedUser)
             return res.status(HTTP_STATUS.OK).json(response)
         } catch (error) {
