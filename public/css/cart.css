@@ -2,6 +2,10 @@ body{
     background-color: #dfdfdf;
 }
 
+nav{
+    background-color: #3b5998;
+}
+
 .cart-container{
     display: flex;
     flex-direction: column;

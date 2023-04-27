@@ -1,13 +1,13 @@
 <div>
     <div class="welcome-box z-depth-2">
         <div class="info-section">
-            <h3 class="welcome-title">Welcome {{user.firstName}} {{user.lastName}} <span class="user-role">({{user.role}})</span></h3>
+            <h3 class="welcome-title">Bienvenido {{user.firstName}} {{user.lastName}} <span class="user-role">({{user.role}})</span></h3>
             <p class="user-email">{{user.email}}</p>
             {{#if user.age}}
-                <p class="user-age">{{user.age}} years old</p>
+                <p class="user-age">{{user.age}} años</p>
             {{/if}}
             {{#if user.githubLogin}}
-                <p class="github-user-tag">(Registered with Github)</p>
+                <p class="github-user-tag">(Registrado con GitHub)</p>
             {{/if}}
         </div>
         {{#if user.profilePic}}
@@ -18,8 +18,8 @@
             </div>
         {{/if}}
     </div>
-    <h1 class="main-title">Our products</h1>
-    <button class="see-cart-button waves-effect waves-light btn-large indigo" onclick="seeCart(event)" id={{user.cart}}>See Cart</button>
+    <h1 class="main-title">Nuestros Productos</h1>
+    <button class="see-cart-button waves-effect waves-light btn-large indigo" onclick="seeCart(event)" id={{user.cart}}>Ver carrito</button>
     <div id="product-list-container">
         {{#each products}}
             <div class="product-item" id={{id}} >
@@ -31,10 +31,10 @@
                         <img src="../../statics/img/{{thumbnails.[0].originalName}}" alt="">
                     </div>
                 {{else}}
-                    <p id="no-image">no image</p>
+                    <p id="no-image">Imagen no disponible</p>
                 {{/if}}
                 {{#if stock}}
-                    <p class="stock-tag">{{stock}} in stock</p>
+                    <p class="stock-tag">{{stock}} en stock</p>
                 {{/if}}
                 <div class="button-section-container">
                     <div class="item-counter-container">
@@ -43,9 +43,9 @@
                         <button class="more-button-counter" onclick="increaseAmount(event)">+</button>
                     </div>
                     {{#if status}}
-                        <button id="add-to-cart-button" class="waves-effect waves-light btn-small" onclick="addToCart(event)">Add to cart</button>
+                        <button id="add-to-cart-button" class="waves-effect waves-light btn-small" onclick="addToCart(event)">Agregar al carrito</button>
                     {{else}}
-                        <button id="add-to-cart-button" class="waves-effect waves-light btn-small" onclick="addToCart(event)" disabled>Sold out</button>
+                        <button id="add-to-cart-button" class="waves-effect waves-light btn-small" onclick="addToCart(event)" disabled>Agotado</button>
                     {{/if}}
                 </div>
             </div>

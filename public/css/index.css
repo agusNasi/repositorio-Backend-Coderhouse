@@ -2,8 +2,12 @@ body{
     background-color: #dfdfdf;
 }
 
+nav{
+    background-color: #3b5998;
+}
+
 .welcome-box{
-    background-color: #90caf9;
+    background-color: lightsteelblue;
     margin: 2rem;
     padding: 1.5rem;
     border-radius: 25px;
@@ -112,6 +116,7 @@ body{
 .see-cart-button{
     display: block;
     margin: 1rem auto;
+    background-color: darkslategray !important;
 }
 
 .button-section-container{
@@ -125,6 +130,7 @@ body{
     margin: auto 1rem 1rem;
     align-items: center;
     gap: 1rem;
+    justify-content: center;
 }
 
 .counter{
