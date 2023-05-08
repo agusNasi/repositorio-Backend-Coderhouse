@@ -26,7 +26,7 @@ class CartsService {
         return newCart
     }
 
-    async addProductToCart(cid, pid, amount) {
+    async addProductToCart(cid, pid, amount, user) {
         if(!cid || !pid || !amount){
             throw new HttpError('Missing required params', HTTP_STATUS.BAD_REQUEST)
         }
@@ -40,6 +40,9 @@ class CartsService {
         }
         if(product.stock < amount){
             throw new HttpError('Insufficient stock for selected product', HTTP_STATUS.BAD_REQUEST)
+        }
+        if(product.owner === user.email){
+            throw new HttpError('Can not add own products', HTTP_STATUS.FORBIDDEN)
         }
         const existingProduct = cart.products.find(item => item.product.code === product.code)
         const existingProductIndex = cart.products.findIndex(item => item.product.code === product.code)

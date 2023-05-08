@@ -25,6 +25,13 @@ class ViewsController{
         })
     }
 
+    static async recover(req, res, next) {
+        res.render('recover', {
+            title: 'Recover your password',
+            styles: 'recover.css'
+        })
+    }
+
     static async products(req, res, next) {
         const { user } = req
         const filter = req.query
@@ -79,6 +86,19 @@ class ViewsController{
                 ticket
                 })
         }catch (error) {
+            next(error)
+        }
+    }
+
+    static async passwordForm(req, res, next){
+        const { token } = req.query
+        try {
+            res.render('newPasswordForm', {
+                title: "Generate new password",
+                styles:"passwordform.css",
+                token
+            })
+        } catch (error) {
             next(error)
         }
     }

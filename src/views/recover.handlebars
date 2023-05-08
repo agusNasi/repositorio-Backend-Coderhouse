@@ -1,0 +1,14 @@
+<h1 class="recover-title">Recover password</h1>
+
+<div class="row container">
+    <form class="col s12" action="/api/mail" method="post">
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="email" class="validate" name="email">
+                <label for="email">Email</label>
+                <span class="helper-text" data-error="Introduce a valid email" data-success="right"></span>
+            </div>
+        </div>
+        <input class="waves-effect waves-light btn-small recover-submit" type="submit" value="Send recovering email">
+    </form>
+</div>

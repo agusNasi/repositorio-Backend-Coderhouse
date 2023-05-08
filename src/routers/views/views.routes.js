@@ -20,13 +20,17 @@ router.get('/login',
     ViewsController.login
 )
 
+router.get('/login/recover',
+    sessionMiddleware,
+    ViewsController.recover)
+
 router.get('/products',
     authMiddleware,
     passportCall('jwt'),
     ViewsController.products
 )
 
-router.get('/cart/:cid', 
+router.get('/cart/:cid',
     authMiddleware,
     passportCall('jwt'),
     ViewsController.cart
@@ -42,6 +46,10 @@ router.get('/ticket/:tid',
     authMiddleware,
     passportCall('jwt'),
     ViewsController.ticket
+)
+
+router.get('/newpasswordform',
+    ViewsController.passwordForm
 )
 
 module.exports = router

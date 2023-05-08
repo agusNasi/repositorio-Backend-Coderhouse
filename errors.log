@@ -1,0 +1,31 @@
+{"level":"fatal","message":"Prueba fatal"}
+{"level":"error","message":"Prueba error"}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials q206-20020acaf2d7000000b0038c49afdf76sm450682oih.0 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials e82-20020acab555000000b0038e8d7fc086sm429519oif.18 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d12-20020a05683018ec00b006ab13915cd4sm294754otf.81 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials r26-20020a05683001da00b006a63283a9e5sm4468611ota.75 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials i1-20020aca0c41000000b003908004b37dsm421382oiy.26 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials y63-20020aca3242000000b0039083786de1sm483732oiy.21 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d18-20020a4aba92000000b00541fbbbcd31sm1015890oop.5 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials h4-20020a4a4204000000b005470d574224sm4458390ooj.25 - gsmtp","responseCode":535}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials v15-20020a9d4e8f000000b006aaf3e81baesm2629152otk.24 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials f23-20020a9d7b57000000b0069f0a85fa36sm503497oto.57 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials r204-20020acadad5000000b0038bf8c6151fsm513019oig.6 - gsmtp","responseCode":535}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials e3-20020a4ad243000000b005251f71250dsm4485838oos.37 - gsmtp","responseCode":535}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials e1-20020a056830200100b006a5fae26f18sm4576674otp.39 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials x6-20020a4ad046000000b00549efd1fc72sm4497345oor.35 - gsmtp","responseCode":535}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}

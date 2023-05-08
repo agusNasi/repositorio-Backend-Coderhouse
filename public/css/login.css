@@ -28,3 +28,7 @@ nav{
     margin: auto;
     display: block;
 }
+
+.login-submit{
+    color: #fff;
+}

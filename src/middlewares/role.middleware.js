@@ -1,31 +1,20 @@
 const HTTP_STATUS = require("../constants/api.constants.js")
 
-const adminMiddleware = async (req, res, next) => {
-    if(req.user.role === "admin"){
-        next()
-    }
-    else{
-        res.status(HTTP_STATUS.FORBIDDEN).json({
-            success: false,
-            message: 'Only admin can access this resource'
-        })
-    }
-}
-
-const userMiddleware = async (req, res, next) => {
-    if(req.user.role === "user"){
-        next()
-    }
-    else{
-        res.status(HTTP_STATUS.FORBIDDEN).json({
-            success: false,
-            message: 'Only users can access this resource'
-        })
+const roleMiddleware = (roles) => {
+    return async (req, res, next) => {
+        if(roles.includes(req.user.role)){
+            next()
+        }
+        else{
+            res.status(HTTP_STATUS.FORBIDDEN).json({
+                success: false,
+                message: 'You have no access to this resourse'
+            })
+        }
     }
 }
 
 
 module.exports = {
-    adminMiddleware,
-    userMiddleware
+    roleMiddleware
 }
