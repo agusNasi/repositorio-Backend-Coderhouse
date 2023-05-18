@@ -1,9 +1,8 @@
-const { Router } = require('express')
-const MailController = require('../../controllers/mail.controller.js')
+const { Router } = require('express');
+const MailController = require('../../controllers/mail.controller.js');
 
-const router = Router()
+const router = Router();
 
-router.post('/', MailController.sendEmail)
+router.post('/', MailController.sendEmail);
 
-
-module.exports = router
+module.exports = router;

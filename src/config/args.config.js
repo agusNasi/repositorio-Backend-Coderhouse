@@ -1,11 +1,15 @@
-const { Command } = require('commander')
+const { Command } = require('commander');
 
-const program = new Command()
+const program = new Command();
 
-program.option('-m, --mode <mode>', 'Mode for different work enviroments', 'development')
+program.option(
+  '-m, --mode <mode>',
+  'Mode for different work enviroments',
+  'development'
+);
 
-program.parse()
+program.parse();
 
 console.log('Options: ', program.opts());
 
-module.exports = program.opts()
+module.exports = program.opts();

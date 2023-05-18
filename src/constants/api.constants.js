@@ -6,6 +6,6 @@ const HTTP_STATUS = {
   FORBIDDEN: 403,
   NOT_FOUND: 404,
   SERVER_ERROR: 500,
-}
+};
 
-module.exports = HTTP_STATUS
+module.exports = HTTP_STATUS;

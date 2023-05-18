@@ -6,5 +6,4 @@ class HttpError {
   }
 }
 
-module.exports = HttpError
-
+module.exports = HttpError;

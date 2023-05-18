@@ -1,0 +1,204 @@
+paths:
+  /api/carts/:
+    get:
+      summary: Get all carts
+      tags:
+        - Carts
+      responses:
+        '200':
+          description: Get all carts successfully from database
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        '500':
+          description: Internal Server Error
+    post:
+      summary: Create a new cart
+      tags:
+        - Carts
+      responses:
+        '201':
+          description: New cart added to database successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/Cart'
+        '500':
+          description: Internal Server Error
+  /api/carts/{cid}/:
+    get:
+      summary: Get a single cart specified by its Id
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Cart Id
+          schema:
+            $type: string
+      responses:
+        '200':
+          description: Get the specified cart successfully from database
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Cart'
+        '400':
+          description: Missing cart Id on the request
+        '404':
+          description: No cart found with the specified Id
+        '500':
+          description: Internal Server Error
+    delete:
+      summary: Remove all products from a specified cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Cart Id
+          schema:
+            $type: string
+      responses:
+        '200':
+          description: Specified cart cleared successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/Cart'
+        '400':
+          description: Not Id specified
+        '404':
+          description: Not product found for the specified Id
+        '500':
+          description: Internal Server Error
+  /api/carts/{cid}/product/{pid}/:
+    put:
+      summary: Add product to specified cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Cart Id
+          schema:
+            $type: string
+        - name: pid
+          in: path
+          required: true
+          description: Id of the product to add
+          schema:
+            $type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/addProductToCart'
+      responses:
+        '200':
+          description: Product added to cart successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/Cart'
+        '400':
+          description: 'Some of the following parameters are missing: product Id, Cart Id, amount'
+        '403':
+          description: An owner of a product is trying to add it to his cart
+        '404':
+          description: No product or no cart found for the specified Id
+        '500':
+          description: Internal Server Error
+    delete:
+      summary: Delete a product from the specified cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Cart Id
+          schema:
+            $type: string
+        - name: pid
+          in: path
+          required: true
+          description: Id of the product to delete
+          schema:
+            $type: string
+      responses:
+        '200':
+          description: Specified product removed from cart
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/Cart'
+        '400':
+          description: No cart Id or product Id specified
+        '404':
+          description: product or cart not found for the specified Id
+        '500':
+          description: Internal Server Error
+  /api/carts/{cid}/purchase/:
+    put:
+      summary: Purchase all available products from a specified cart. Update cart products, products amonuts and generate ticket
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Cart Id
+          schema:
+            $type: string
+      responses:
+        '200':
+          description: Successfully purchase all avalable products from specified cart
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/schemas/Cart'
+        '400':
+          description: Missing cart Id or not products found in the specified cart
+        '404':
+          description: No cart found for the specified Id
+        '500':
+          description: Internal Server Error
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Autogenerated Mongo Id
+        products:
+          type: array
+          items:
+            type: object
+          description: List of products stored on the cart
+      example:
+        _id: ObjectId("abcdefghi12345678")
+        products: []
+  requestBodies:
+    addProductToCart:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Amount of item to add for the products
+      example:
+        amount: 10

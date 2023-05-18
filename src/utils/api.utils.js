@@ -1,19 +1,19 @@
 const apiSuccessResponse = (payload) => {
   return {
     success: true,
-    payload
-  }
+    payload,
+  };
 };
 
 const apiErrorResponse = (description, error = null) => {
   return {
     success: false,
     description,
-    details: error
-  }
+    details: error,
+  };
 };
 
-module.exports = { 
+module.exports = {
   apiSuccessResponse,
-  apiErrorResponse
-}
+  apiErrorResponse,
+};

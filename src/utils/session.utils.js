@@ -1,6 +1,5 @@
-const jwt = require("jsonwebtoken")
-const { SECRET_KEY, SESSION_KEY } = require("../config/enviroment.config.js")
-
+const jwt = require('jsonwebtoken');
+const { SECRET_KEY, SESSION_KEY } = require('../config/enviroment.config.js');
 
 const generateToken = (user) => {
   const token = jwt.sign(user, SECRET_KEY, { expiresIn: '24h' });
@@ -16,12 +15,12 @@ const cookieExtractor = (req) => {
 };
 
 const generateRecoveringToken = (email) => {
-  const token = jwt.sign({email}, SECRET_KEY, { expiresIn: '1h' });
+  const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
   return token;
 };
 
 module.exports = {
   generateRecoveringToken,
   generateToken,
-  cookieExtractor
-}
+  cookieExtractor,
+};
