@@ -9,6 +9,9 @@ class GetUserDTO {
     this.role = payload.role;
     this.cart = payload.cart;
     this.profilePic = payload.profile_pic;
+    this.lastConnection = payload.last_connection;
+    this.documents = payload.documents;
+    this.status = payload.status;
   }
 }
 
@@ -23,6 +26,9 @@ class AddUserDTO {
     this.role = payload.role;
     this.cart = payload.cart;
     this.profile_pic = payload.profilePic;
+    this.last_connection = payload.lastConnection;
+    this.documents = payload.documents;
+    this.status = payload.status;
   }
 }
 
@@ -40,12 +46,17 @@ class UpdateUserDTO {
     if (payload.profilePic) {
       this.profile_pic = payload.profilePic;
     }
+    if (payload.lastConnection) {
+      this.last_connection = payload.lastConnection;
+    }
     const filteredPayload = {
       email: payload.email,
       age: payload.age,
       password: payload.password,
       role: payload.role,
       cart: payload.cart,
+      documents: payload.documents,
+      status: payload.status,
     };
     Object.assign(this, filteredPayload);
   }

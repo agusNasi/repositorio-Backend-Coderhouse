@@ -37,7 +37,7 @@ router.get(
   SessionsController.loginGithub
 );
 
-router.get('/logout', SessionsController.logout);
+router.get('/logout', passportCall('jwt'), SessionsController.logout);
 
 router.get('/current', passportCall('jwt'), SessionsController.currentSession);
 

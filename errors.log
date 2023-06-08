@@ -19,3 +19,4 @@
 {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"mockcode"},"level":"error"}
 {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"mockcode"},"level":"error"}
 {"level":"error","message":{"description":"Can not add own products","status":403}}
+{"level":"error","message":{"description":"Can not add own products","status":403}}

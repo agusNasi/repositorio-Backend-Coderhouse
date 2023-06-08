@@ -36,6 +36,25 @@ const userSchema = new mongoose.Schema({
   profile_pic: {
     type: Object,
   },
+  documents: {
+    type: [
+      {
+        name: String,
+        reference: String,
+        doctype: {
+          type: String,
+          enum: ['id', 'address', 'account_status'],
+        },
+      },
+    ],
+  },
+  status: {
+    type: Boolean,
+    default: false,
+  },
+  last_connection: {
+    type: Date,
+  },
 });
 
 const userModel = mongoose.model(userCollection, userSchema);

@@ -55,6 +55,9 @@ const initializePassport = () => {
             age,
             password: createHash(password),
             cart: cart._id,
+            lastConnection: new Date(),
+            documents: [],
+            status: false,
           };
           if (req.file) {
             const paths = {
@@ -129,6 +132,8 @@ const initializePassport = () => {
               password: ' ',
               githubLogin: userData.login,
               cart: cart._id,
+              lastConnection: new Date(),
+              documents,
             };
             const userPayload = new AddUserDTO(newUser);
             const response = await usersDao.addUser(userPayload);

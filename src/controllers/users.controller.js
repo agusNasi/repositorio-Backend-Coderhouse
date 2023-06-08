@@ -65,6 +65,20 @@ class UsersController {
     }
   }
 
+  static async addDocuments(req, res, next) {
+    const { uid } = req.params;
+    const { file } = req;
+    const { doctype } = req.headers;
+    try {
+      const newUser = await usersService.addDocuments(uid, file, doctype);
+      req.logger.info('New document added');
+      const response = apiSuccessResponse(newUser);
+      return res.status(HTTP_STATUS.OK).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async updateUser(req, res, next) {
     const { uid } = req.params;
     const payload = req.body;
