@@ -1,9 +1,13 @@
 const HTTP_STATUS = require('../constants/api.constants.js');
+const MailController = require('../controllers/mail.controller.js');
 const getDaos = require('../models/daos/factory.js');
 const { createHash, isValidPassword } = require('../utils/bcrypt.utils.js');
 const HttpError = require('../utils/error.utils.js');
+const MailService = require('./mail.service.js');
 
 const { usersDao, cartsDao } = getDaos();
+
+const mailService = new MailService();
 
 class UsersService {
   async getAll() {
@@ -122,9 +126,6 @@ class UsersService {
     if (!user) {
       throw new HttpError('User not found', HTTP_STATUS.NOT_FOUND);
     }
-    if (user.role === 'user' && !user.status) {
-      throw new HttpError('Incomplete documents', HTTP_STATUS.FORBIDDEN);
-    }
     let newRole = {};
     if (user.role === 'user') {
       newRole.role = 'premium';
@@ -132,8 +133,23 @@ class UsersService {
     if (user.role === 'premium') {
       newRole.role = 'user';
     }
-    const updatedUser = await usersDao.updateUser(user._id, newRole);
+    const updatedUser = await usersDao.updateUser(uid, newRole);
     return updatedUser;
+  }
+
+  async deleteInactive() {
+    const users = await usersDao.getAll();
+    const date = new Date();
+    const twoDaysMs = 2 * 24 * 60 * 60 * 1000;
+    const inactiveUsers = users.filter((user) => {
+      if (date.getTime() - user.last_connection.getTime() > twoDaysMs) {
+        return user;
+      }
+    });
+    inactiveUsers.forEach((iUser) => {
+      mailService.notifyDeletion(iUser.email, iUser.first_name);
+      usersDao.deleteUser(iUser._id);
+    });
   }
 
   async deleteUser(uid) {

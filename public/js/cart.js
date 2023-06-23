@@ -7,7 +7,6 @@ const removeProduct = async (event) => {
   await fetch(`/api/carts/${cartId}/product/${productId}`, {
     method: 'DELETE',
   });
-  alert('item deleted from cart');
   window.location.href = window.location.href;
 };
 
@@ -21,7 +20,7 @@ const clearCart = async (event) => {
 
 const seeTicketButton = (tid) => {
   const ticketButton = document.createElement('button');
-  ticketButton.innerText = 'See ticket';
+  ticketButton.innerText = 'Ver comprobante';
   ticketButton.classList.add(
     'see-ticket',
     'waves-effect',
@@ -38,7 +37,8 @@ const seeTicketButton = (tid) => {
 
 const showThanks = () => {
   const thanksTag = document.createElement('p');
-  thanksTag.innerText = 'Thanks for buying with us. Enjoy your purchase!';
+  thanksTag.innerText =
+    'Gracias por la compra! Pronto le enviaremos el pedido, que lo disfrute!';
   cartBody.appendChild(thanksTag);
 };
 

@@ -2,9 +2,9 @@
 <div class='row register-form-container container'>
   <form
     class='col s12 register-form'
-    action='/api/session/register'
-    method='post'
+    id='register-form'
     enctype='multipart/form-data'
+    onsubmit='registerUser(event)'
   >
     <div class='row'>
       <div class='input-field col s6'>
@@ -22,7 +22,7 @@
         <label for='disabled'>Email</label>
         <span
           class='helper-text'
-          data-error='Introduce a valid email'
+          data-error='Introduce un email valido'
           data-success='right'
         ></span>
       </div>
@@ -36,22 +36,22 @@
     <div class='row'>
       <div class='input-field col s12'>
         <input type='password' class='validate' name='password' />
-        <label for='password'>contraseña</label>
+        <label for='password'>Contraseña</label>
       </div>
     </div>
     <div class='row'>
       <div class='input-field col s12'>
-        <p>Foto de perfil (opcional)</p>
+        <p>Elije una foto (opcional)</p>
         <input type='file' class='validate' name='file' />
       </div>
     </div>
     <input
       class='waves-effect waves-light btn-small register-submit'
       type='submit'
-      value='Registrar'
+      value='Registrarse'
     />
   </form>
 </div>
-<a href='/login' class='login-anchor'>Ya tienes cuenta? Inicia sesion aqui!</a>
+<a href='/login' class='login-anchor'>Ya tiene una cuenta? inicia sesion!</a>
 
 <script src='/statics/js/register.js'></script>

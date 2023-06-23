@@ -10,7 +10,7 @@ const showError = (messsage) => {
 const showRedirectButton = () => {
   const redirectButton = document.createElement('button');
   redirectButton.innerHTML = `
-    <a href='/login/recover'>New email</a>
+    <a href='/login/recover'>Nuevo email de recuperacion</a>
     `;
   form.parentElement.parentElement.appendChild(redirectButton);
 };
@@ -28,15 +28,16 @@ form.addEventListener('submit', (event) => {
       switch (response.status) {
         case 200:
           console.log(response);
+          window.location.href = '/login';
           break;
         case 400:
           showError(
-            'The new password can not be the same than the previous. Please, choose a new one'
+            'La nueva contraseña no puede ser igual a la anterior. Por favor, elige uno nuevo'
           );
           break;
         case 403:
           showError(
-            'The token has expired, click below to send a new recovering email'
+            'El token ha caducado, haga clic a continuación para enviar un nuevo correo electrónico de recuperación'
           );
           showRedirectButton();
           break;

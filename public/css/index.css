@@ -2,8 +2,8 @@ body {
   background-color: #dfdfdf;
 }
 
-nav {
-  background-color: #3b5998;
+.body-content {
+  margin-bottom: 5rem;
 }
 
 .welcome-box {

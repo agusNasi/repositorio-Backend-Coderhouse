@@ -1,5 +1,7 @@
 const HTTP_STATUS = require('../constants/api.constants.js');
 
+//check user role
+
 const roleMiddleware = (roles) => {
   return async (req, res, next) => {
     if (roles.includes(req.user.role)) {

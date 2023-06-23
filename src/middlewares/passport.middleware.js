@@ -1,6 +1,8 @@
 const passport = require('passport');
 const HTTP_STATUS = require('../constants/api.constants');
 
+//perform session management
+
 const passportCall = (strategy, options = {}) => {
   return async (req, res, next) => {
     await passport.authenticate(

@@ -1,0 +1,18 @@
+nav {
+  background-color: #3b5998;
+}
+
+.page-footer {
+  background-color: #3b5998;
+  margin-top: 3rem;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}

@@ -2,12 +2,14 @@ const getDaos = require('../models/daos/factory');
 const CartsService = require('../services/carts.service.js');
 const ProductsService = require('../services/products.service.js');
 const TicketsService = require('../services/tickets.service.js');
+const UsersService = require('../services/users.service');
 
 const { chatsDao, ticketsDao } = getDaos();
 
 const productsService = new ProductsService();
 const cartsService = new CartsService();
 const ticketsService = new TicketsService();
+const usersService = new UsersService();
 
 class ViewsController {
   static async register(req, res, next) {
@@ -36,11 +38,13 @@ class ViewsController {
     const filter = req.query;
     try {
       const products = await productsService.getProducts(filter);
+      const admin = user.role === 'admin';
       res.render('index', {
         title: 'E-commerce',
         styles: 'index.css',
         products: products,
         user: user,
+        admin: admin,
       });
     } catch (error) {
       next(error);
@@ -52,11 +56,30 @@ class ViewsController {
     const { user } = req;
     try {
       const cart = await cartsService.getCartById(cid);
+      const admin = user.role === 'admin';
       res.render('cart', {
         title: 'Cart',
         styles: 'cart.css',
         user,
         cart,
+        admin,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async users(req, res, next) {
+    const { user } = req;
+    try {
+      const admin = user.role === 'admin';
+      const usersList = await usersService.getAll();
+      res.render('users', {
+        title: 'Usuarios',
+        styles: 'users.css',
+        user,
+        usersList,
+        admin,
       });
     } catch (error) {
       next(error);

@@ -6,8 +6,11 @@ const {
   AddProductDTO,
 } = require('../models/dtos/products.dto.js');
 const HttpError = require('../utils/error.utils.js');
+const MailService = require('./mail.service.js');
 
 const { productsDao } = getDaos();
+
+const mailService = new MailService();
 
 class ProductsService {
   async getProducts(filter = {}) {
@@ -74,6 +77,9 @@ class ProductsService {
         "Only product's owner can delete this resource",
         HTTP_STATUS.FORBIDDEN
       );
+    }
+    if (product.owner !== 'adminCoder@coder.com') {
+      await mailService.productDeletion(product.owner, product.title);
     }
     const deletedProduct = await productsDao.delete(pid);
     return deletedProduct;

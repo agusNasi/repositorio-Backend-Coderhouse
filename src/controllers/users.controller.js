@@ -2,7 +2,7 @@ const HTTP_STATUS = require('../constants/api.constants.js');
 const { apiSuccessResponse } = require('../utils/api.utils.js');
 const {
   AddUserDTO,
-  GetUserDTO,
+  GetSimpleUserDTO,
   UpdateUserDTO,
 } = require('../models/dtos/users.dto.js');
 const UsersService = require('../services/users.service.js');
@@ -18,7 +18,7 @@ class UsersController {
       const users = await usersService.getAll();
       const usersPayload = [];
       users.forEach((user) => {
-        usersPayload.push(new GetUserDTO(user));
+        usersPayload.push(new GetSimpleUserDTO(user));
       });
       const response = apiSuccessResponse(usersPayload);
       return res.status(HTTP_STATUS.OK).json(response);
@@ -31,7 +31,7 @@ class UsersController {
     const { uid } = req.params;
     try {
       const user = await usersService.getById(uid);
-      const userPayload = new GetUserDTO(user);
+      const userPayload = new GetSimpleUserDTO(user);
       const response = apiSuccessResponse(userPayload);
       return res.status(HTTP_STATUS.OK).json(response);
     } catch (error) {
@@ -43,7 +43,7 @@ class UsersController {
     const { email } = req.params;
     try {
       const user = await usersService.getByEmail(email);
-      const userPayload = new GetUserDTO(user);
+      const userPayload = new GetSimpleUserDTO(user);
       const response = apiSuccessResponse(userPayload);
       return res.status(HTTP_STATUS.OK).json(response);
     } catch (error) {
@@ -124,6 +124,17 @@ class UsersController {
       const updatedUser = await usersService.updateUserRole(uid);
       req.logger.info('User role updated');
       const response = apiSuccessResponse(updatedUser);
+      return res.status(HTTP_STATUS.OK).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteInactiveUsers(req, res, next) {
+    try {
+      const deletedUsers = await usersService.deleteInactive();
+      req.logger.info('Inactive users deleted');
+      const response = apiSuccessResponse(deletedUsers);
       return res.status(HTTP_STATUS.OK).json(response);
     } catch (error) {
       next(error);

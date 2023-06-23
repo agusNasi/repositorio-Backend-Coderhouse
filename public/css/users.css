@@ -1,0 +1,16 @@
+.profile-img-container {
+  height: 10rem;
+  width: 10rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-pic {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.container_button-delete {
+  margin-top: 3rem;
+}

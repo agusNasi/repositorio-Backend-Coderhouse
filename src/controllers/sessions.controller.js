@@ -47,7 +47,9 @@ class SessionsController {
   static async logout(req, res, next) {
     try {
       const { user } = req;
-      await usersService.updateUser(user.id, { last_connection: new Date() });
+      if (user.role !== 'admin') {
+        await usersService.updateUser(user.id, { last_connection: new Date() });
+      }
       res.clearCookie(SESSION_KEY);
       req.logger.info('user logged out');
       res.redirect('/');

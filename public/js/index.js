@@ -19,9 +19,16 @@ const addToCart = async (event) => {
       }
     );
     if (addedProduct.status !== 403) {
-      alert('item added to cart');
+      Swal.fire({
+        icon: 'success',
+        title: 'Item agregado al carrito!',
+      });
     } else {
-      alert("Can't add product to cart");
+      Swal.fire({
+        icon: 'error',
+        title: 'No se pudo agregar al carrito',
+        text: 'Intentelo nuevamente mas tarde',
+      });
     }
     event.target.previousElementSibling.children[1].textContent = 1;
   } catch (error) {

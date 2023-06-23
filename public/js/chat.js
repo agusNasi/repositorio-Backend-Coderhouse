@@ -60,7 +60,10 @@ form.addEventListener('submit', async (event) => {
     };
     const sendMessage = await fetch(form.action, requestOptions);
     if (sendMessage.status === 403) {
-      alert('Only users can send messages');
+      Swal.fire({
+        icon: 'info',
+        title: 'Solo los usuarios pueden mandar mensajes!',
+      });
     }
     form.reset();
   } catch (error) {

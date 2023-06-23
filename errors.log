@@ -20,3 +20,54 @@
 {"code":11000,"index":0,"keyPattern":{"code":1},"keyValue":{"code":"mockcode"},"level":"error"}
 {"level":"error","message":{"description":"Can not add own products","status":403}}
 {"level":"error","message":{"description":"Can not add own products","status":403}}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"The new password can not be the same that the previous one","status":400}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"level":"error","message":{"description":"Incomplete documents","status":403}}
+{"code":"ENOENT","errno":-4058,"level":"error","path":"C:\\Users\\Usuario\\Desktop\\backend\\Proyecto Backend-Coder_Nasi\\public\\others\\p1.jpg","storageErrors":[],"syscall":"open"}
+{"code":"ENOENT","errno":-4058,"level":"error","path":"C:\\Users\\Usuario\\Desktop\\backend\\Proyecto Backend-Coder_Nasi\\public\\others\\p1.jpg","storageErrors":[],"syscall":"open"}
+{"code":"ENOENT","errno":-4058,"level":"error","path":"C:\\Users\\Usuario\\Desktop\\backend\\Proyecto Backend-Coder_Nasi\\public\\others\\p1.jpg","storageErrors":[],"syscall":"open"}
+{"level":"error","message":"Unable to create user, email already registered"}
+{"level":"error","message":{"description":"Can not add own products","status":403}}
