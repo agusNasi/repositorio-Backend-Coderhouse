@@ -4,8 +4,11 @@ const { UpdateProductDTO } = require('../models/dtos/products.dto.js');
 const { GetTicketDTO, AddTicketDTO } = require('../models/dtos/ticket.dto.js');
 const { logYellow } = require('../utils/console.utils.js');
 const HttpError = require('../utils/error.utils.js');
+const MailService = require('./mail.service.js');
 
 const { ticketsDao, cartsDao, productsDao } = getDaos();
+
+const mailService = new MailService();
 
 class TicketsService {
   async getTickets() {
@@ -62,6 +65,7 @@ class TicketsService {
         HTTP_STATUS.BAD_REQUEST
       );
     }
+    await mailService.purcharser(purchaser.email, purchaser.firstName);
     const ticketPayloadDTO = new AddTicketDTO(purchaser, amount, payload);
     const newTicket = await ticketsDao.create(ticketPayloadDTO);
     return newTicket;

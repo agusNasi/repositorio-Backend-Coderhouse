@@ -71,3 +71,9 @@
 {"code":"ENOENT","errno":-4058,"level":"error","path":"C:\\Users\\Usuario\\Desktop\\backend\\Proyecto Backend-Coder_Nasi\\public\\others\\p1.jpg","storageErrors":[],"syscall":"open"}
 {"level":"error","message":"Unable to create user, email already registered"}
 {"level":"error","message":{"description":"Can not add own products","status":403}}
+{"code":"EENVELOPE","command":"API","level":"error"}
+{"level":"error","message":{"description":"Missing products","status":400}}
+{"code":"EENVELOPE","command":"API","level":"error"}
+{"level":"error","message":{"description":"Missing products","status":400}}
+{"level":"error","message":{"description":"Missing products","status":400}}
+{"level":"error","message":{"description":"Missing products","status":400}}

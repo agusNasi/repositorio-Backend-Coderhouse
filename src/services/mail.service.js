@@ -54,6 +54,22 @@ class MailService {
     });
     return mailInfo;
   }
+
+  async purcharser(userEmail, username) {
+    const mailInfo = await gmailTransport.sendMail({
+      from: 'E-commerce <agustinnasi49@gmail.com',
+      to: userEmail,
+      subject: 'Gracias por la compra!',
+      html: `
+            <div>
+                <h1>Gracias por la compra, ${username}!</h1>
+                <p>En la brevedad nos estaremos comunicando con vos para gestionar el tema de envio de su producto!</p>
+                <p>E-commerce team</p>
+            </div>`,
+      attachments: [],
+    });
+    return mailInfo;
+  }
 }
 
 module.exports = MailService;
