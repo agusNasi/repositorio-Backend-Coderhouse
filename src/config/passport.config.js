@@ -117,7 +117,7 @@ const initializePassport = () => {
       {
         clientID: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
-        callbackURL: `http://${BASE_URL}/api/session/github/callback`,
+        callbackURL: `https://${BASE_URL}/api/session/github/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         const userData = profile._json;
