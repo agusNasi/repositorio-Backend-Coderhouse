@@ -10,6 +10,7 @@ const {
   SECRET_KEY,
   CLIENT_ID,
   CLIENT_SECRET,
+  BASE_URL,
 } = require('../config/enviroment.config.js');
 const { ADMIN_NAME, ADMIN_PASSWORD } = require('./enviroment.config');
 const { AddUserDTO, GetUserDTO } = require('../models/dtos/users.dto.js');
@@ -116,7 +117,7 @@ const initializePassport = () => {
       {
         clientID: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
-        callbackURL: 'http://localhost:8080/api/session/github/callback',
+        callbackURL: `http://${BASE_URL}/api/session/github/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         const userData = profile._json;

@@ -4,6 +4,7 @@ dotenv.config();
 
 module.exports = {
   PORT: process.env.PORT || 8080,
+  BASE_URL: process.env.BASE_URL || 'localhost:8080',
   MONGO_URI: process.env.MONGO_URI || '',
   DATABASE: process.env.DATABASE,
   DB_PASSWORD: process.env.DB_PASSWORD,
